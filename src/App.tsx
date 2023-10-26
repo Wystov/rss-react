@@ -10,6 +10,8 @@ class App extends Component {
     data: {},
   };
 
+  componentDidMount = () => this.getData();
+
   setQuery = (newTerm: string) => {
     this.setState({ query: newTerm });
   };
@@ -20,8 +22,12 @@ class App extends Component {
   };
 
   getData = async () => {
+    console.trace();
     this.setState({ isFetching: true });
-    const response = await fetch('https://swapi.dev/api/people');
+    let url = 'https://swapi.dev/api/people';
+    const { query } = this.state;
+    if (query.length) url += `/?search=${query}`;
+    const response = await fetch(url);
     const data = await response.json();
     console.log(data);
     this.setState({ isFetching: false });

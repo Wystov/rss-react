@@ -1,6 +1,7 @@
 import { Component } from 'react';
+import { ResultsProps } from '../types';
 
-class Results extends Component {
+class Results extends Component<ResultsProps> {
   render() {
     return (
       <section>

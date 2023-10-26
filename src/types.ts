@@ -1,7 +1,7 @@
 export interface SearchProps {
   query: string;
   setQuery: (query: string) => void;
-  getData: () => Promise<void>;
+  handleSearch: () => void;
 }
 
 interface Data {

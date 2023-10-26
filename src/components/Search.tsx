@@ -3,12 +3,12 @@ import { SearchProps } from '../types';
 
 class Search extends Component<SearchProps> {
   updateTerm = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.props.setQuery(e.target.value);
+    this.props.setQuery(e.target.value.trim());
   };
 
   submit = (e: React.FormEvent) => {
     e.preventDefault();
-    this.props.getData();
+    this.props.handleSearch();
   };
 
   render() {

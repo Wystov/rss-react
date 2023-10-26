@@ -6,12 +6,17 @@ import { AppState } from './types';
 class App extends Component {
   state: AppState = {
     isFetching: false,
-    query: '',
+    query: localStorage.getItem('sw-search-query') ?? '',
     data: {},
   };
 
   setQuery = (newTerm: string) => {
     this.setState({ query: newTerm });
+  };
+
+  handleSearch = () => {
+    localStorage.setItem('sw-search-query', this.state.query);
+    this.getData();
   };
 
   getData = async () => {
@@ -28,7 +33,7 @@ class App extends Component {
         <Search
           query={this.state.query}
           setQuery={this.setQuery}
-          getData={this.getData}
+          handleSearch={this.handleSearch}
         />
         <Results data={this.state.data} />
       </>

@@ -2,7 +2,7 @@ import { Component } from 'react';
 import Search from './components/Search';
 import Results from './components/Results';
 import ErrorComponent from './components/ErrorComponent';
-import type { AppState } from './types';
+import type { AppState, Data } from './types';
 
 class App extends Component {
   state: AppState = {
@@ -11,30 +11,30 @@ class App extends Component {
     data: null,
   };
 
-  componentDidMount = () => this.getData();
+  componentDidMount = () => this.handleSearch();
 
   setQuery = (newTerm: string) => {
     this.setState({ query: newTerm });
   };
 
-  handleSearch = () => {
+  handleSearch = async () => {
+    if (this.state.isFetching) return;
     localStorage.setItem('sw-search-query', this.state.query);
-    this.getData();
+    this.setState({ data: null, isFetching: true });
+    const data = await this.getData();
+    this.setState({ data: data ?? null, isFetching: false });
   };
 
   getData = async () => {
-    this.setState({ data: null, isFetching: true });
     let url = 'https://swapi.dev/api/people';
     const { query } = this.state;
     if (query.length) url += `/?search=${query}`;
     try {
       const response = await fetch(url);
-      const data = await response.json();
-      this.setState({ data });
+      const data: Data = await response.json();
+      return data;
     } catch {
-      console.error('Error occured on data fetching');
-    } finally {
-      this.setState({ isFetching: false });
+      console.warn('Error occured on data fetching');
     }
   };
 
@@ -57,6 +57,7 @@ class App extends Component {
           query={this.state.query}
           setQuery={this.setQuery}
           handleSearch={this.handleSearch}
+          isFetching={this.state.isFetching}
         />
         {this.content()}
         <ErrorComponent />

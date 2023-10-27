@@ -4,11 +4,12 @@ export interface SearchProps {
   query: string;
   setQuery: (query: string) => void;
   handleSearch: () => void;
+  isFetching: boolean;
 }
 
 type ResultItem = Record<string, string>;
 
-interface Data {
+export interface Data {
   count: number;
   next: string | null;
   previous: string | null;

@@ -20,7 +20,9 @@ class Search extends Component<SearchProps> {
             value={this.props.query}
             onChange={this.updateTerm}
           />
-          <button type="submit">Search</button>
+          <button type="submit" disabled={this.props.isFetching}>
+            Search
+          </button>
         </form>
       </section>
     );

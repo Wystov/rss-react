@@ -5,7 +5,7 @@ import { ResultsProps } from '../types';
 class Results extends Component<ResultsProps> {
   content = () => {
     const { results } = this.props;
-    return results.length > 0 ? (
+    return results.length ? (
       results.map((item, i) => <Card item={item} key={i} />)
     ) : (
       <span>No results</span>

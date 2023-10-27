@@ -22,25 +22,34 @@ class App extends Component {
   };
 
   getData = async () => {
-    this.setState({ isFetching: true });
-    this.setState({ data: null });
+    this.setState({ data: null, isFetching: true });
     let url = 'https://swapi.dev/api/people';
     const { query } = this.state;
     if (query.length) url += `/?search=${query}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    this.setState({ data });
-    this.setState({ isFetching: false });
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      this.setState({ data });
+    } catch {
+      console.error('Error occured on data fetching');
+    } finally {
+      this.setState({ isFetching: false });
+    }
+  };
+
+  content = () => {
+    const { isFetching, data } = this.state;
+    switch (true) {
+      case isFetching:
+        return <div className="preloader">preloader</div>;
+      case data !== null:
+        return <Results results={data!.results} />;
+      default:
+        return <div>Unexpected error occured, please try again later</div>;
+    }
   };
 
   render() {
-    const content =
-      !this.state.isFetching && this.state.data ? (
-        <Results results={this.state.data.results} />
-      ) : (
-        <div className="preloader">preloader</div>
-      );
-
     return (
       <>
         <Search
@@ -48,7 +57,7 @@ class App extends Component {
           setQuery={this.setQuery}
           handleSearch={this.handleSearch}
         />
-        {content}
+        {this.content()}
       </>
     );
   }

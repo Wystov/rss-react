@@ -7,7 +7,7 @@ class App extends Component {
   state: AppState = {
     isFetching: false,
     query: localStorage.getItem('sw-search-query') ?? '',
-    data: {},
+    data: null,
   };
 
   componentDidMount = () => this.getData();
@@ -22,18 +22,25 @@ class App extends Component {
   };
 
   getData = async () => {
-    console.trace();
     this.setState({ isFetching: true });
+    this.setState({ data: null });
     let url = 'https://swapi.dev/api/people';
     const { query } = this.state;
     if (query.length) url += `/?search=${query}`;
     const response = await fetch(url);
     const data = await response.json();
-    console.log(data);
+    this.setState({ data });
     this.setState({ isFetching: false });
   };
 
   render() {
+    const content =
+      !this.state.isFetching && this.state.data ? (
+        <Results results={this.state.data.results} />
+      ) : (
+        <div className="preloader">preloader</div>
+      );
+
     return (
       <>
         <Search
@@ -41,7 +48,7 @@ class App extends Component {
           setQuery={this.setQuery}
           handleSearch={this.handleSearch}
         />
-        <Results data={this.state.data} />
+        {content}
       </>
     );
   }

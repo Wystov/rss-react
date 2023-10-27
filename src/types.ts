@@ -4,16 +4,25 @@ export interface SearchProps {
   handleSearch: () => void;
 }
 
+type ResultItem = Record<string, string>;
+
 interface Data {
-  someData?: string;
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: ResultItem[];
 }
 
 export interface ResultsProps {
-  data: Data;
+  results: ResultItem[];
 }
 
 export interface AppState {
   isFetching: boolean;
   query: string;
-  data: Data;
+  data: Data | null;
+}
+
+export interface CardProps {
+  item: ResultItem;
 }

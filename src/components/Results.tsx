@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import Card from './Card';
-import { ResultsProps } from '../types';
+import type { ResultsProps } from '../types';
 
 class Results extends Component<ResultsProps> {
   content = () => {

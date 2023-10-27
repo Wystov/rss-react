@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export interface SearchProps {
   query: string;
   setQuery: (query: string) => void;
@@ -25,4 +27,9 @@ export interface AppState {
 
 export interface CardProps {
   item: ResultItem;
+}
+
+export interface ErrorBoundaryProps {
+  children: ReactNode;
+  fallback: JSX.Element;
 }

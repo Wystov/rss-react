@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { SearchProps } from '../types';
+import type { SearchProps } from '../types';
 
 class Search extends Component<SearchProps> {
   updateTerm = (e: React.ChangeEvent<HTMLInputElement>) => {

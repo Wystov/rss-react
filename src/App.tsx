@@ -1,7 +1,8 @@
 import { Component } from 'react';
 import Search from './components/Search';
 import Results from './components/Results';
-import { AppState } from './types';
+import ErrorComponent from './components/ErrorComponent';
+import type { AppState } from './types';
 
 class App extends Component {
   state: AppState = {
@@ -45,7 +46,7 @@ class App extends Component {
       case data !== null:
         return <Results results={data!.results} />;
       default:
-        return <div>Unexpected error occured, please try again later</div>;
+        return <div>Error occured on getting data, please try later</div>;
     }
   };
 
@@ -58,6 +59,7 @@ class App extends Component {
           handleSearch={this.handleSearch}
         />
         {this.content()}
+        <ErrorComponent />
       </>
     );
   }

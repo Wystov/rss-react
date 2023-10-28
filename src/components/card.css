@@ -1,0 +1,14 @@
+.card {
+  width: 280px;
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.card__name {
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 2px;
+}

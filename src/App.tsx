@@ -42,11 +42,19 @@ class App extends Component {
     const { isFetching, data } = this.state;
     switch (true) {
       case isFetching:
-        return <div className="preloader">preloader</div>;
+        return (
+          <div className="preloader-container">
+            <span className="preloader" />
+          </div>
+        );
       case data !== null:
         return <Results results={data!.results} />;
       default:
-        return <div>Error occured on getting data, please try later</div>;
+        return (
+          <div className="error">
+            Error occured on getting data, please try later
+          </div>
+        );
     }
   };
 

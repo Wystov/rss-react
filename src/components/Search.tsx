@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import type { SearchProps } from '../types';
+import './search.css';
 
 class Search extends Component<SearchProps> {
   updateTerm = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,13 +15,18 @@ class Search extends Component<SearchProps> {
   render() {
     return (
       <section>
-        <form onSubmit={this.submit}>
+        <form className="search" onSubmit={this.submit}>
           <input
+            className="search__input"
             type="text"
             value={this.props.query}
             onChange={this.updateTerm}
           />
-          <button type="submit" disabled={this.props.isFetching}>
+          <button
+            className="search__btn"
+            type="submit"
+            disabled={this.props.isFetching}
+          >
             Search
           </button>
         </form>

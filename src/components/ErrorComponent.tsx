@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import './errorComponent.css';
 
 class ErrorComponent extends Component {
   state = {
@@ -11,7 +12,11 @@ class ErrorComponent extends Component {
 
   render = () => {
     if (this.state.throw) throw new Error('Manual error was thrown');
-    return <button onClick={this.throw}>Throw error</button>;
+    return (
+      <button className="error-btn" onClick={this.throw}>
+        Throw error
+      </button>
+    );
   };
 }
 

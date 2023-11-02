@@ -1,0 +1,13 @@
+.pagination {
+  display: flex;
+  gap: 5px;
+  padding: 0;
+}
+
+.pagination__item {
+  list-style: none;
+
+  &:last-child {
+    margin-left: auto;
+  }
+}

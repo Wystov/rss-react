@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
 export interface SearchProps {
+  initialValue: string;
   onSearch: (query: string) => void;
   isFetching: boolean;
 }
@@ -25,4 +26,10 @@ export interface CardProps {
 export interface ErrorBoundaryProps {
   children: ReactNode;
   fallback: JSX.Element;
+}
+
+export interface PaginationProps {
+  itemsCount: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
 }

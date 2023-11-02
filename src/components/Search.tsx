@@ -2,10 +2,8 @@ import type { SearchProps } from '../types';
 import { useState } from 'react';
 import './search.css';
 
-const Search = ({ isFetching, onSearch }: SearchProps) => {
-  const [query, setQuery] = useState(
-    localStorage.getItem('sw-search-query') ?? ''
-  );
+const Search = ({ initialValue, isFetching, onSearch }: SearchProps) => {
+  const [query, setQuery] = useState(initialValue);
 
   const updateQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value.trim());

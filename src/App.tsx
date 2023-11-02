@@ -27,6 +27,11 @@ const App = () => {
     handleSearch();
   }, [search, page]);
 
+  const handleQueryChange = (query: string) => {
+    setSearch(query);
+    setPage(1);
+  };
+
   const content = () => {
     switch (true) {
       case isFetching:
@@ -63,7 +68,7 @@ const App = () => {
     <>
       <Search
         initialValue={search}
-        onSearch={setSearch}
+        onSearch={handleQueryChange}
         isFetching={isFetching}
       />
       {content()}

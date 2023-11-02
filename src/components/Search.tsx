@@ -1,38 +1,37 @@
-import { Component } from 'react';
 import type { SearchProps } from '../types';
+import { useState } from 'react';
 import './search.css';
 
-class Search extends Component<SearchProps> {
-  updateTerm = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.props.setQuery(e.target.value.trim());
+const Search = ({ isFetching, onSearch }: SearchProps) => {
+  const [query, setQuery] = useState(
+    localStorage.getItem('sw-search-query') ?? ''
+  );
+
+  const updateQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value.trim());
   };
 
-  submit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    this.props.handleSearch();
+    if (isFetching) return;
+    onSearch(query);
   };
 
-  render() {
-    return (
-      <section>
-        <form className="search" onSubmit={this.submit}>
-          <input
-            className="search__input"
-            type="text"
-            value={this.props.query}
-            onChange={this.updateTerm}
-          />
-          <button
-            className="search__btn"
-            type="submit"
-            disabled={this.props.isFetching}
-          >
-            Search
-          </button>
-        </form>
-      </section>
-    );
-  }
-}
+  return (
+    <section>
+      <form className="search" onSubmit={handleSubmit}>
+        <input
+          className="search__input"
+          type="text"
+          value={query}
+          onChange={updateQuery}
+        />
+        <button className="search__btn" type="submit" disabled={isFetching}>
+          Search
+        </button>
+      </form>
+    </section>
+  );
+};
 
 export default Search;

@@ -1,9 +1,7 @@
 import type { ReactNode } from 'react';
 
 export interface SearchProps {
-  query: string;
-  setQuery: (query: string) => void;
-  handleSearch: () => void;
+  onSearch: (query: string) => void;
   isFetching: boolean;
 }
 
@@ -18,12 +16,6 @@ export interface Data {
 
 export interface ResultsProps {
   results: ResultItem[];
-}
-
-export interface AppState {
-  isFetching: boolean;
-  query: string;
-  data: Data | null;
 }
 
 export interface CardProps {

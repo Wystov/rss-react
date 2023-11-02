@@ -1,11 +1,9 @@
-import { Component } from 'react';
 import Card from './Card';
 import type { ResultsProps } from '../types';
 import './results.css';
 
-class Results extends Component<ResultsProps> {
-  content = () => {
-    const { results } = this.props;
+const Results = ({ results }: ResultsProps) => {
+  const content = () => {
     return results.length ? (
       results.map((item, i) => <Card item={item} key={i} />)
     ) : (
@@ -13,9 +11,7 @@ class Results extends Component<ResultsProps> {
     );
   };
 
-  render() {
-    return <section className="results">{this.content()}</section>;
-  }
-}
+  return <section className="results">{content()}</section>;
+};
 
 export default Results;

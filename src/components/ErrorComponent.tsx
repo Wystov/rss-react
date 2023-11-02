@@ -1,23 +1,20 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import './errorComponent.css';
 
-class ErrorComponent extends Component {
-  state = {
-    throw: false,
+const ErrorComponent = () => {
+  const [hasError, setHasError] = useState(false);
+
+  const throwError = () => {
+    setHasError(true);
   };
 
-  throw = () => {
-    this.setState({ throw: true });
-  };
+  if (hasError) throw new Error('Manual error was thrown');
 
-  render = () => {
-    if (this.state.throw) throw new Error('Manual error was thrown');
-    return (
-      <button className="error-btn" onClick={this.throw}>
-        Throw error
-      </button>
-    );
-  };
-}
+  return (
+    <button className="error-btn" onClick={throwError}>
+      Throw error
+    </button>
+  );
+};
 
 export default ErrorComponent;

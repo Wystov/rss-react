@@ -1,45 +1,31 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import Search from './components/Search';
 import Results from './components/Results';
 import ErrorComponent from './components/ErrorComponent';
-import type { AppState, Data } from './types';
+import type { Data } from './types';
+import { getData } from './api/getData';
 
-class App extends Component {
-  state: AppState = {
-    isFetching: false,
-    query: localStorage.getItem('sw-search-query') ?? '',
-    data: null,
-  };
+const App = () => {
+  const [isFetching, setIsFetching] = useState(false);
+  const [search, setSearch] = useState(
+    localStorage.getItem('sw-search-query') ?? ''
+  );
+  const [data, setData] = useState<Data | null>(null);
 
-  componentDidMount = () => this.handleSearch();
+  useEffect(() => {
+    const handleSearch = async () => {
+      localStorage.setItem('sw-search-query', search);
+      setData(null);
+      setIsFetching(true);
+      const data = await getData(search);
+      if (data) setData(data);
+      setIsFetching(false);
+    };
 
-  setQuery = (newTerm: string) => {
-    this.setState({ query: newTerm });
-  };
+    handleSearch();
+  }, [search]);
 
-  handleSearch = async () => {
-    if (this.state.isFetching) return;
-    localStorage.setItem('sw-search-query', this.state.query);
-    this.setState({ data: null, isFetching: true });
-    const data = await this.getData();
-    this.setState({ data: data ?? null, isFetching: false });
-  };
-
-  getData = async () => {
-    let url = 'https://swapi.dev/api/people';
-    const { query } = this.state;
-    if (query.length) url += `/?search=${query}`;
-    try {
-      const response = await fetch(url);
-      const data: Data = await response.json();
-      return data;
-    } catch {
-      console.warn('Error occured on data fetching');
-    }
-  };
-
-  content = () => {
-    const { isFetching, data } = this.state;
+  const content = () => {
     switch (true) {
       case isFetching:
         return (
@@ -58,20 +44,13 @@ class App extends Component {
     }
   };
 
-  render() {
-    return (
-      <>
-        <Search
-          query={this.state.query}
-          setQuery={this.setQuery}
-          handleSearch={this.handleSearch}
-          isFetching={this.state.isFetching}
-        />
-        {this.content()}
-        <ErrorComponent />
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <Search onSearch={setSearch} isFetching={isFetching} />
+      {content()}
+      <ErrorComponent />
+    </>
+  );
+};
 
 export default App;

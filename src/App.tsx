@@ -63,7 +63,7 @@ const App = () => {
               We&apos;v got {data!.count} result{data!.count === 1 ? '' : 's'}
               {search.length ? ` for "${search}"` : ''}
             </p>
-            {data?.results.length ? (
+            {data?.results.length && (
               <>
                 <Pagination
                   itemsCount={data!.count}
@@ -74,7 +74,7 @@ const App = () => {
                 />
                 <Results results={data!.results} />
               </>
-            ) : null}
+            )}
           </>
         );
       default:

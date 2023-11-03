@@ -1,8 +1,15 @@
 .card {
+  cursor: pointer;
   width: 280px;
   border: 2px solid white;
   border-radius: 10px;
   padding: 10px;
+  transition: 0.3s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 7px 15px -5px rgba(227, 224, 224, 0.368);
+  }
 }
 
 .card__name {

@@ -6,7 +6,7 @@ export interface SearchProps {
   isFetching: boolean;
 }
 
-type ResultItem = Record<string, string>;
+export type ResultItem = Record<string, string>;
 
 export interface Data {
   count: number;
@@ -21,6 +21,7 @@ export interface ResultsProps {
 
 export interface CardProps {
   item: ResultItem;
+  onClick: (id: string | null) => void;
 }
 
 export interface ErrorBoundaryProps {
@@ -34,4 +35,8 @@ export interface PaginationProps {
   onPageChange: (page: number) => void;
   itemsPerPage: number;
   onItemsPerPageChange: (itemsPerPage: number) => void;
+}
+
+export interface DetailsProps {
+  data: ResultItem | null;
 }

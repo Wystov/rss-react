@@ -10,6 +10,11 @@ const Pagination = ({
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const pageCount = Math.ceil(itemsCount / itemsPerPage);
 
+  const pageNumbers = () =>
+    Array(pageCount)
+      .fill(null)
+      .map((_, i) => i + 1);
+
   return (
     <ul className="pagination">
       <li className="pagination__item">
@@ -30,11 +35,17 @@ const Pagination = ({
           &lt;
         </button>
       </li>
-      <li className="pagination__item">
-        <div className="pagination__current">
-          {currentPage}/{pageCount}
-        </div>
-      </li>
+      {pageNumbers().map((pageNumber) => (
+        <li className="pagination__item" key={pageNumber}>
+          <button
+            className="pagination__btn pagination__number"
+            onClick={() => onPageChange(pageNumber)}
+            disabled={currentPage === pageNumber}
+          >
+            {pageNumber}
+          </button>
+        </li>
+      ))}
       <li className="pagination__item">
         <button
           className="pagination__btn"

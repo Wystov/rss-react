@@ -11,3 +11,10 @@
     margin-left: auto;
   }
 }
+
+.pagination__number:disabled {
+  border: 1px solid white;
+  border-radius: 5px;
+  color: white;
+  background-color: transparent;
+}

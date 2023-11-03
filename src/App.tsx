@@ -46,6 +46,7 @@ const App = () => {
           <>
             <p className="results-count">
               We&apos;v got {data!.count} result{data!.count === 1 ? '' : 's'}
+              {search.length ? ` for "${search}"` : ''}
             </p>
             <Pagination
               itemsCount={data!.count}

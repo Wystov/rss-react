@@ -1,13 +1,13 @@
-import { useState } from 'react';
 import { PaginationProps } from '../types';
 import './pagination.css';
 
 const Pagination = ({
   itemsCount,
   currentPage,
+  itemsPerPage,
   onPageChange,
+  onItemsPerPageChange,
 }: PaginationProps) => {
-  const [itemsPerPage, setItemsPerPage] = useState(10);
   const pageCount = Math.ceil(itemsCount / itemsPerPage);
 
   const pageNumbers = () =>
@@ -69,10 +69,10 @@ const Pagination = ({
         <select
           className="pagination__select"
           value={itemsPerPage}
-          onChange={(e) => setItemsPerPage(+e.target.value)}
+          onChange={(e) => onItemsPerPageChange(+e.target.value)}
         >
-          <option value="5">5</option>
           <option value="10">10</option>
+          <option value="20">20</option>
         </select>
       </li>
     </ul>

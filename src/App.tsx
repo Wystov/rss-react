@@ -13,22 +13,37 @@ const App = () => {
   );
   const [data, setData] = useState<Data | null>(null);
   const [page, setPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   useEffect(() => {
     const handleSearch = async () => {
       localStorage.setItem('sw-search-query', search);
       setData(null);
       setIsFetching(true);
-      const data = await getData(search, page);
+
+      let apiPage = page;
+      if (itemsPerPage === 20) {
+        apiPage = 2 * apiPage - 1;
+      }
+      const data = await getData(search, apiPage);
+      if (itemsPerPage === 20 && data?.next) {
+        const nextData = await getData(search, apiPage + 1);
+        if (nextData) data.results.push(...nextData.results);
+      }
       if (data) setData(data);
       setIsFetching(false);
     };
 
     handleSearch();
-  }, [search, page]);
+  }, [search, page, itemsPerPage]);
 
   const handleQueryChange = (query: string) => {
     setSearch(query);
+    setPage(1);
+  };
+
+  const handleItemsPerPageChange = (value: number) => {
+    setItemsPerPage(value);
     setPage(1);
   };
 
@@ -51,7 +66,9 @@ const App = () => {
             <Pagination
               itemsCount={data!.count}
               currentPage={page}
+              itemsPerPage={itemsPerPage}
               onPageChange={setPage}
+              onItemsPerPageChange={handleItemsPerPageChange}
             />
             <Results results={data!.results} />
           </>

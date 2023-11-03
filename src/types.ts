@@ -32,4 +32,6 @@ export interface PaginationProps {
   itemsCount: number;
   currentPage: number;
   onPageChange: (page: number) => void;
+  itemsPerPage: number;
+  onItemsPerPageChange: (itemsPerPage: number) => void;
 }

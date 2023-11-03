@@ -1,4 +1,4 @@
-import { PaginationProps } from '../types';
+import { PaginationProps } from '../../types';
 import './pagination.css';
 
 const Pagination = ({

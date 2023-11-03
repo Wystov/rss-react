@@ -1,5 +1,5 @@
-import Card from './Card';
-import type { ResultsProps } from '../types';
+import Card from '../Card/Card';
+import type { ResultsProps } from '../../types';
 import './results.css';
 
 const Results = ({ results }: ResultsProps) => {

@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import Search from './components/Search';
-import Results from './components/Results';
-import ErrorComponent from './components/ErrorComponent';
+import Search from './components/Search/Search';
+import Results from './components/Results/Results';
+import ErrorComponent from './components/ErrorComponent/ErrorComponent';
 import type { Data } from './types';
 import { getData } from './api/getData';
-import Pagination from './components/Pagination';
+import Pagination from './components/Pagination/Pagination';
 
 const App = () => {
   const [isFetching, setIsFetching] = useState(false);

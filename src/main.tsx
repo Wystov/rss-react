@@ -1,7 +1,6 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import ErrorBoundary from './components/ErrorBoundary';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import './index.css';
 
 const fallback = <p className="error">Error has occured, reload the page</p>;

@@ -5,6 +5,7 @@ import ErrorComponent from './components/ErrorComponent/ErrorComponent';
 import type { Data } from './types';
 import { getData } from './api/getData';
 import Pagination from './components/Pagination/Pagination';
+import Preloader from './components/Preloader/Preloader';
 
 const App = () => {
   const [isFetching, setIsFetching] = useState(false);
@@ -50,12 +51,7 @@ const App = () => {
   const content = () => {
     switch (true) {
       case isFetching:
-        return (
-          <div className="preloader-container">
-            <span className="preloader" />
-            <span>Loading...</span>
-          </div>
-        );
+        return <Preloader />;
       case data !== null:
         return (
           <>

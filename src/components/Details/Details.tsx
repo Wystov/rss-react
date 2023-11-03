@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ResultItem } from '../../types';
+import Preloader from '../Preloader/Preloader';
 
 const Details = () => {
   const [searchParams] = useSearchParams();
@@ -21,7 +22,7 @@ const Details = () => {
       <h3>Details</h3>
       <p>id: {id}</p>
       {data === null ? (
-        <p>Loading...</p>
+        <Preloader />
       ) : (
         Object.entries(data).map((item, i) => (
           <p key={i}>

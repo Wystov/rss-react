@@ -63,14 +63,18 @@ const App = () => {
               We&apos;v got {data!.count} result{data!.count === 1 ? '' : 's'}
               {search.length ? ` for "${search}"` : ''}
             </p>
-            <Pagination
-              itemsCount={data!.count}
-              currentPage={page}
-              itemsPerPage={itemsPerPage}
-              onPageChange={setPage}
-              onItemsPerPageChange={handleItemsPerPageChange}
-            />
-            <Results results={data!.results} />
+            {data?.results.length ? (
+              <>
+                <Pagination
+                  itemsCount={data!.count}
+                  currentPage={page}
+                  itemsPerPage={itemsPerPage}
+                  onPageChange={setPage}
+                  onItemsPerPageChange={handleItemsPerPageChange}
+                />
+                <Results results={data!.results} />
+              </>
+            ) : null}
           </>
         );
       default:

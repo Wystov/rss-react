@@ -4,7 +4,7 @@ import {
   Route,
 } from 'react-router-dom';
 import App from '../App';
-import Details from '../components/Details/Details';
+import Details from '../components/Details';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

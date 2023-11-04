@@ -1,6 +1,6 @@
-import Card from '../Card/Card';
+import Card from '../Card';
 import type { ResultsProps } from '../../types';
-import './results.css';
+import './style.css';
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';

@@ -1,5 +1,5 @@
 import { PaginationProps } from '../../types';
-import './pagination.css';
+import './style.css';
 
 const Pagination = ({
   itemsCount,

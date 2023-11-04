@@ -9,8 +9,9 @@ export interface SearchProps {
 export interface ResultItem {
   name: string;
   height: string;
-  weight: string;
+  mass: string;
   birth_year: string;
+  url: string;
 }
 
 export interface Data {

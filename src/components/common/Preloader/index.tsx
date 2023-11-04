@@ -1,4 +1,4 @@
-import './preloader.css';
+import './style.css';
 
 const Preloader = () => (
   <div className="preloader-container">

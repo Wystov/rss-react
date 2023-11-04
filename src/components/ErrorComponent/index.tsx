@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './errorComponent.css';
+import './style.css';
 
 const ErrorComponent = () => {
   const [hasError, setHasError] = useState(false);

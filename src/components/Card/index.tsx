@@ -1,5 +1,5 @@
 import type { CardProps } from '../../types';
-import './card.css';
+import './style.css';
 
 const Card = ({ item, onClick }: CardProps) => {
   const id = item.url.split('/').at(-2) ?? null;

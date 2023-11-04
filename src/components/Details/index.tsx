@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ResultItem } from '../../types';
-import Preloader from '../Preloader/Preloader';
+import Preloader from '../common/Preloader';
 import { getData } from '../../api/getData';
 
 const Details = () => {

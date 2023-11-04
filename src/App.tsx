@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import Search from './components/Search/Search';
-import Results from './components/Results/Results';
-import ErrorComponent from './components/ErrorComponent/ErrorComponent';
+import Search from './components/Search';
+import Results from './components/Results';
+import ErrorComponent from './components/ErrorComponent';
 import type { Data } from './types';
 import { getData } from './api/getData';
-import Pagination from './components/Pagination/Pagination';
-import Preloader from './components/Preloader/Preloader';
+import Pagination from './components/Pagination';
+import Preloader from './components/common/Preloader';
 import { useSearchParams } from 'react-router-dom';
 
 const App = () => {
@@ -56,6 +56,7 @@ const App = () => {
   const handlePageChange = (value: number) => {
     setSearchParams((params) => {
       params.set('page', String(value));
+      params.delete('details');
       return params;
     });
     setPage(value);

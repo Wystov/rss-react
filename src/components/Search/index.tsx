@@ -1,6 +1,6 @@
 import type { SearchProps } from '../../types';
 import { useState } from 'react';
-import './search.css';
+import './style.css';
 import { useSearchParams } from 'react-router-dom';
 
 const Search = ({ initialValue, isFetching, onSearch }: SearchProps) => {

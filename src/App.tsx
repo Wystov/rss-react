@@ -30,7 +30,10 @@ const App = () => {
         apiPage = 2 * apiPage - 1;
       }
       const data = await getData({ query: search, page: apiPage });
-      if (!(data && 'results' in data)) return;
+      if (!(data && 'results' in data)) {
+        setIsFetching(false);
+        return;
+      }
       if (itemsPerPage === 20 && data?.next) {
         const nextData = await getData({ query: search, page: apiPage + 1 });
         if (nextData && 'results' in nextData)
@@ -51,6 +54,10 @@ const App = () => {
   const handleItemsPerPageChange = (value: number) => {
     setItemsPerPage(value);
     setPage(1);
+    setSearchParams((params) => {
+      params.set('page', '1');
+      return params;
+    });
   };
 
   const handlePageChange = (value: number) => {

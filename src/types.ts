@@ -6,7 +6,12 @@ export interface SearchProps {
   isFetching: boolean;
 }
 
-export type ResultItem = Record<string, string>;
+export interface ResultItem {
+  name: string;
+  height: string;
+  weight: string;
+  birth_year: string;
+}
 
 export interface Data {
   count: number;
@@ -40,3 +45,5 @@ export interface PaginationProps {
 export interface DetailsProps {
   data: ResultItem | null;
 }
+
+export type UrlParams = { id: string } | { query: string; page: number };

@@ -1,21 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ResultItem } from '../../types';
 import Preloader from '../Preloader/Preloader';
+import { getData } from '../../api/getData';
 
 const Details = () => {
   const [searchParams] = useSearchParams();
   const id = searchParams.get('details');
   const [data, setData] = useState<ResultItem | null>(null);
 
-  const getDetails = async () => {
-    const url = 'https://swapi.dev/api/people/' + id;
-    const response = await fetch(url);
-    const details: ResultItem = await response.json();
-    setData(details);
-  };
+  useEffect(() => {
+    const handleDetails = async () => {
+      if (!id) return;
+      const data = await getData({ id });
+      if (data && 'name' in data) setData(data);
+    };
 
-  getDetails();
+    handleDetails();
+  }, [id]);
 
   return (
     <div className="results__details">

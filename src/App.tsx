@@ -6,14 +6,17 @@ import type { Data } from './types';
 import { getData } from './api/getData';
 import Pagination from './components/Pagination/Pagination';
 import Preloader from './components/Preloader/Preloader';
+import { useSearchParams } from 'react-router-dom';
 
 const App = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isFetching, setIsFetching] = useState(false);
-  const [search, setSearch] = useState(
-    localStorage.getItem('sw-search-query') ?? ''
-  );
+  const initialSearchValue =
+    searchParams.get('search') ?? localStorage.getItem('sw-search-query');
+  const [search, setSearch] = useState(initialSearchValue ?? '');
   const [data, setData] = useState<Data | null>(null);
-  const [page, setPage] = useState(1);
+  const paramsPage = searchParams.get('page');
+  const [page, setPage] = useState(paramsPage ? +paramsPage : 1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
   useEffect(() => {
@@ -26,12 +29,14 @@ const App = () => {
       if (itemsPerPage === 20) {
         apiPage = 2 * apiPage - 1;
       }
-      const data = await getData(search, apiPage);
+      const data = await getData({ query: search, page: apiPage });
+      if (!(data && 'results' in data)) return;
       if (itemsPerPage === 20 && data?.next) {
-        const nextData = await getData(search, apiPage + 1);
-        if (nextData) data.results.push(...nextData.results);
+        const nextData = await getData({ query: search, page: apiPage + 1 });
+        if (nextData && 'results' in nextData)
+          data.results.push(...nextData.results);
       }
-      if (data) setData(data);
+      setData(data);
       setIsFetching(false);
     };
 
@@ -46,6 +51,14 @@ const App = () => {
   const handleItemsPerPageChange = (value: number) => {
     setItemsPerPage(value);
     setPage(1);
+  };
+
+  const handlePageChange = (value: number) => {
+    setSearchParams((params) => {
+      params.set('page', String(value));
+      return params;
+    });
+    setPage(value);
   };
 
   const content = () => {
@@ -65,7 +78,7 @@ const App = () => {
                   itemsCount={data!.count}
                   currentPage={page}
                   itemsPerPage={itemsPerPage}
-                  onPageChange={setPage}
+                  onPageChange={handlePageChange}
                   onItemsPerPageChange={handleItemsPerPageChange}
                 />
                 <Results results={data!.results} />

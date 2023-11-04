@@ -13,12 +13,17 @@ const Results = ({ results }: ResultsProps) => {
   const handleShowDetails = async (id: string | null) => {
     if (showDetails) {
       setShowDetails(false);
-      searchParams.delete('details');
-      setSearchParams(searchParams);
+      setSearchParams((params) => {
+        params.delete('details');
+        return params;
+      });
       return;
     }
     if (!id) return;
-    setSearchParams({ details: id });
+    setSearchParams((params) => {
+      params.set('details', id);
+      return params;
+    });
     setShowDetails(true);
   };
 

@@ -12,6 +12,10 @@ export interface ResultItem {
   mass: string;
   birth_year: string;
   url: string;
+  gender: string;
+  hair_color: string;
+  skin_color: string;
+  eye_color: string;
 }
 
 export interface Data {
@@ -23,6 +27,8 @@ export interface Data {
 
 export interface ResultsProps {
   results: ResultItem[];
+  showDetails: boolean;
+  handleShowDetails: (id: string | null) => void;
 }
 
 export interface CardProps {

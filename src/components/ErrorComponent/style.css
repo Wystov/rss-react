@@ -4,7 +4,7 @@
   width: 50px;
   height: 50px;
   right: 25px;
-  top: 25px;
+  bottom: 25px;
   background-color: red;
   border-radius: 50px;
   transition: 0.1s;

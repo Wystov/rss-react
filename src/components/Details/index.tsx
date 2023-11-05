@@ -22,16 +22,19 @@ const Details = () => {
   return (
     <div className="results__details">
       <h3>Details</h3>
-      <p>id: {id}</p>
       {data === null ? (
         <Preloader />
       ) : (
-        Object.entries(data).map((item, i) => (
-          <p key={i}>
-            {item[0]}
-            {item[1]}
-          </p>
-        ))
+        <>
+          <p>Name: {data.name}</p>
+          <p>Gender: {data.gender}</p>
+          <p>Height: {data.height}</p>
+          <p>Mass: {data.mass}</p>
+          <p>Birth year: {data.birth_year}</p>
+          <p>Hair color: {data.hair_color}</p>
+          <p>Skin color: {data.skin_color}</p>
+          <p>Eye color: {data.eye_color}</p>
+        </>
       )}
     </div>
   );

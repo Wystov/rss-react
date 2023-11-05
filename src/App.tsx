@@ -7,6 +7,7 @@ import { getData } from './api/getData';
 import Pagination from './components/Pagination';
 import Preloader from './components/common/Preloader';
 import { useSearchParams } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 const App = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -18,10 +19,13 @@ const App = () => {
   const paramsPage = searchParams.get('page');
   const [page, setPage] = useState(paramsPage ? +paramsPage : 1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const hasId = searchParams.get('details') ? true : false;
+  const [showDetails, setShowDetails] = useState(hasId);
 
   useEffect(() => {
     const handleSearch = async () => {
       localStorage.setItem('sw-search-query', search);
+      setShowDetails(false);
       setData(null);
       setIsFetching(true);
 
@@ -46,6 +50,23 @@ const App = () => {
     handleSearch();
   }, [search, page, itemsPerPage]);
 
+  const handleShowDetails = (id: string | null) => {
+    if (showDetails) {
+      setShowDetails(false);
+      setSearchParams((params) => {
+        params.delete('details');
+        return params;
+      });
+      return;
+    }
+    if (!id) return;
+    setSearchParams((params) => {
+      params.set('details', id);
+      return params;
+    });
+    setShowDetails(true);
+  };
+
   const handleQueryChange = (query: string) => {
     setSearch(query);
     setPage(1);
@@ -66,6 +87,7 @@ const App = () => {
       params.delete('details');
       return params;
     });
+    setShowDetails(false);
     setPage(value);
   };
 
@@ -89,7 +111,11 @@ const App = () => {
                   onPageChange={handlePageChange}
                   onItemsPerPageChange={handleItemsPerPageChange}
                 />
-                <Results results={data!.results} />
+                <Results
+                  results={data!.results}
+                  showDetails={showDetails}
+                  handleShowDetails={handleShowDetails}
+                />
               </>
             )}
           </>
@@ -105,13 +131,20 @@ const App = () => {
 
   return (
     <>
-      <Search
-        initialValue={search}
-        onSearch={handleQueryChange}
-        isFetching={isFetching}
-      />
-      {content()}
-      <ErrorComponent />
+      <main className={`main ${showDetails ? 'main--small' : ''}`}>
+        <Search
+          initialValue={search}
+          onSearch={handleQueryChange}
+          isFetching={isFetching}
+        />
+        {content()}
+        <ErrorComponent />
+      </main>
+      {showDetails && (
+        <aside className="details">
+          <Outlet />
+        </aside>
+      )}
     </>
   );
 };

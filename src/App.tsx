@@ -27,7 +27,6 @@ const App = () => {
   useEffect(() => {
     const handleSearch = async () => {
       localStorage.setItem('sw-search-query', search);
-      setShowDetails(false);
       setData(null);
       setIsFetching(true);
 

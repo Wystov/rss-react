@@ -9,6 +9,7 @@ import Preloader from './components/common/Preloader';
 import { useSearchParams } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import CloseBtn from './components/common/CloseBtn/CloseBtn';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const App = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -130,8 +131,10 @@ const App = () => {
     }
   };
 
+  const fallback = <p className="error">Error has occured, reload the page</p>;
+
   return (
-    <>
+    <ErrorBoundary fallback={fallback}>
       <main
         className={`main ${showDetails ? 'main--small' : ''}`}
         onClick={() => handleShowDetails(null)}
@@ -150,7 +153,7 @@ const App = () => {
           <CloseBtn onClick={() => handleShowDetails(null)} />
         </aside>
       )}
-    </>
+    </ErrorBoundary>
   );
 };
 

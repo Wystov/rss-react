@@ -3,7 +3,6 @@ import { useSearchParams } from 'react-router-dom';
 import { ResultItem } from '../../types';
 import Preloader from '../common/Preloader';
 import { getData } from '../../api/getData';
-import './style.css';
 
 const Details = () => {
   const [searchParams] = useSearchParams();

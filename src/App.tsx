@@ -8,6 +8,7 @@ import Pagination from './components/Pagination';
 import Preloader from './components/common/Preloader';
 import { useSearchParams } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
+import CloseBtn from './components/common/CloseBtn/CloseBtn';
 
 const App = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -131,7 +132,10 @@ const App = () => {
 
   return (
     <>
-      <main className={`main ${showDetails ? 'main--small' : ''}`}>
+      <main
+        className={`main ${showDetails ? 'main--small' : ''}`}
+        onClick={() => handleShowDetails(null)}
+      >
         <Search
           initialValue={search}
           onSearch={handleQueryChange}
@@ -143,6 +147,7 @@ const App = () => {
       {showDetails && (
         <aside className="details">
           <Outlet />
+          <CloseBtn onClick={() => handleShowDetails(null)} />
         </aside>
       )}
     </>

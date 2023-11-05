@@ -54,3 +54,7 @@ export interface DetailsProps {
 }
 
 export type UrlParams = { id: string } | { query: string; page: number };
+
+export interface CloseBtnProps {
+  onClick: () => void;
+}

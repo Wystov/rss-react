@@ -33,6 +33,7 @@ body {
 }
 
 .details {
+  position: relative;
   width: 100%;
   padding: 20px 30px;
   background-color: #464646;

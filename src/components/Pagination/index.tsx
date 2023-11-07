@@ -1,13 +1,15 @@
 import { PaginationProps } from '../../types';
 import './style.css';
+import { useContext } from 'react';
+import { DataContext } from '../../App';
 
 const Pagination = ({
-  itemsCount,
   currentPage,
   itemsPerPage,
   onPageChange,
   onItemsPerPageChange,
 }: PaginationProps) => {
+  const itemsCount = useContext(DataContext)?.count ?? 0;
   const pageCount = Math.ceil(itemsCount / itemsPerPage);
 
   const pageNumbers = () =>

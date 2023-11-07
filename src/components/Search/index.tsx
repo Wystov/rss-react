@@ -1,10 +1,11 @@
 import type { SearchProps } from '../../types';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import './style.css';
 import { useSearchParams } from 'react-router-dom';
+import { SearchContext } from '../../App';
 
-const Search = ({ initialValue, isFetching, onSearch }: SearchProps) => {
-  const [query, setQuery] = useState(initialValue);
+const Search = ({ isFetching, onSearch }: SearchProps) => {
+  const [query, setQuery] = useState(useContext(SearchContext));
   const [, setSearchParams] = useSearchParams();
 
   const updateQuery = (e: React.ChangeEvent<HTMLInputElement>) => {

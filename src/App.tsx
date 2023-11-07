@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import Search from './components/Search';
 import Results from './components/Results';
 import ErrorComponent from './components/ErrorComponent';
@@ -10,6 +10,9 @@ import { useSearchParams } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import CloseBtn from './components/common/CloseBtn/CloseBtn';
 import ErrorBoundary from './components/ErrorBoundary';
+
+export const DataContext = createContext<Data | null>(null);
+export const SearchContext = createContext<string>('');
 
 const App = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -104,20 +107,18 @@ const App = () => {
               {search.length ? ` for "${search}"` : ''}
             </p>
             {data?.results.length && (
-              <>
+              <DataContext.Provider value={data}>
                 <Pagination
-                  itemsCount={data!.count}
                   currentPage={page}
                   itemsPerPage={itemsPerPage}
                   onPageChange={handlePageChange}
                   onItemsPerPageChange={handleItemsPerPageChange}
                 />
                 <Results
-                  results={data!.results}
                   showDetails={showDetails}
                   handleShowDetails={handleShowDetails}
                 />
-              </>
+              </DataContext.Provider>
             )}
           </>
         );
@@ -138,11 +139,9 @@ const App = () => {
         className={`main ${showDetails ? 'main--small' : ''}`}
         onClick={() => handleShowDetails(null)}
       >
-        <Search
-          initialValue={search}
-          onSearch={handleQueryChange}
-          isFetching={isFetching}
-        />
+        <SearchContext.Provider value={search}>
+          <Search onSearch={handleQueryChange} isFetching={isFetching} />
+        </SearchContext.Provider>
         {content()}
         <ErrorComponent />
       </main>

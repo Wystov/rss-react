@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 
 export interface SearchProps {
-  initialValue: string;
   onSearch: (query: string) => void;
   isFetching: boolean;
 }
@@ -26,7 +25,6 @@ export interface Data {
 }
 
 export interface ResultsProps {
-  results: ResultItem[];
   showDetails: boolean;
   handleShowDetails: (id: string | null) => void;
 }
@@ -42,7 +40,6 @@ export interface ErrorBoundaryProps {
 }
 
 export interface PaginationProps {
-  itemsCount: number;
   currentPage: number;
   onPageChange: (page: number) => void;
   itemsPerPage: number;

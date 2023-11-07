@@ -4,7 +4,6 @@ import Results from './components/Results';
 import ErrorComponent from './components/ErrorComponent';
 import type { Data } from './types';
 import { getData } from './api/getData';
-import Pagination from './components/Pagination';
 import Preloader from './components/common/Preloader';
 import { useSearchParams } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
@@ -23,13 +22,15 @@ const App = () => {
   const [data, setData] = useState<Data | null>(null);
   const paramsPage = searchParams.get('page');
   const [page, setPage] = useState(paramsPage ? +paramsPage : 1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const paramsItemsPerPage = searchParams.get('itemsPerPage');
+  const [itemsPerPage, setItemsPerPage] = useState(
+    paramsItemsPerPage ? +paramsItemsPerPage : 10
+  );
   const hasId = searchParams.get('details') ? true : false;
   const [showDetails, setShowDetails] = useState(hasId);
 
   useEffect(() => {
     const handleSearch = async () => {
-      localStorage.setItem('sw-search-query', search);
       setData(null);
       setIsFetching(true);
 
@@ -37,6 +38,7 @@ const App = () => {
       if (itemsPerPage === 20) {
         apiPage = 2 * apiPage - 1;
       }
+
       const data = await getData({ query: search, page: apiPage });
       if (!(data && 'results' in data)) {
         setIsFetching(false);
@@ -54,7 +56,22 @@ const App = () => {
     handleSearch();
   }, [search, page, itemsPerPage]);
 
-  const handleShowDetails = (id: string | null) => {
+  useEffect(() => {
+    const handleQueryParamsChange = () => {
+      const newSearch = searchParams.get('search');
+      setSearch(newSearch ?? '');
+      const newPage = searchParams.get('page');
+      if (newPage) setPage(+newPage);
+      const itemsPerPage = searchParams.get('itemsPerPage');
+      if (itemsPerPage) setItemsPerPage(+itemsPerPage);
+      const showDetailsId = searchParams.get('details');
+      if (showDetailsId) setShowDetails(true);
+    };
+
+    handleQueryParamsChange();
+  }, [searchParams]);
+
+  const closeDetails = () => {
     if (showDetails) {
       setShowDetails(false);
       setSearchParams((params) => {
@@ -63,36 +80,6 @@ const App = () => {
       });
       return;
     }
-    if (!id) return;
-    setSearchParams((params) => {
-      params.set('details', id);
-      return params;
-    });
-    setShowDetails(true);
-  };
-
-  const handleQueryChange = (query: string) => {
-    setSearch(query);
-    setPage(1);
-  };
-
-  const handleItemsPerPageChange = (value: number) => {
-    setItemsPerPage(value);
-    setPage(1);
-    setSearchParams((params) => {
-      params.set('page', '1');
-      return params;
-    });
-  };
-
-  const handlePageChange = (value: number) => {
-    setSearchParams((params) => {
-      params.set('page', String(value));
-      params.delete('details');
-      return params;
-    });
-    setShowDetails(false);
-    setPage(value);
   };
 
   const content = () => {
@@ -101,26 +88,9 @@ const App = () => {
         return <Preloader />;
       case data !== null:
         return (
-          <>
-            <p className="results-count">
-              We&apos;v got {data!.count} result{data!.count === 1 ? '' : 's'}
-              {search.length ? ` for "${search}"` : ''}
-            </p>
-            {data?.results.length && (
-              <DataContext.Provider value={data}>
-                <Pagination
-                  currentPage={page}
-                  itemsPerPage={itemsPerPage}
-                  onPageChange={handlePageChange}
-                  onItemsPerPageChange={handleItemsPerPageChange}
-                />
-                <Results
-                  showDetails={showDetails}
-                  handleShowDetails={handleShowDetails}
-                />
-              </DataContext.Provider>
-            )}
-          </>
+          <DataContext.Provider value={data}>
+            <Results />
+          </DataContext.Provider>
         );
       default:
         return (
@@ -137,18 +107,18 @@ const App = () => {
     <ErrorBoundary fallback={fallback}>
       <main
         className={`main ${showDetails ? 'main--small' : ''}`}
-        onClick={() => handleShowDetails(null)}
+        onClick={() => closeDetails()}
       >
         <SearchContext.Provider value={search}>
-          <Search onSearch={handleQueryChange} isFetching={isFetching} />
+          <Search isFetching={isFetching} />
+          {content()}
         </SearchContext.Provider>
-        {content()}
         <ErrorComponent />
       </main>
       {showDetails && (
         <aside className="details">
           <Outlet />
-          <CloseBtn onClick={() => handleShowDetails(null)} />
+          <CloseBtn onClick={() => closeDetails()} />
         </aside>
       )}
     </ErrorBoundary>

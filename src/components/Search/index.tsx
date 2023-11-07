@@ -4,7 +4,7 @@ import './style.css';
 import { useSearchParams } from 'react-router-dom';
 import { SearchContext } from '../../App';
 
-const Search = ({ isFetching, onSearch }: SearchProps) => {
+const Search = ({ isFetching }: SearchProps) => {
   const [query, setQuery] = useState(useContext(SearchContext));
   const [, setSearchParams] = useSearchParams();
 
@@ -15,10 +15,23 @@ const Search = ({ isFetching, onSearch }: SearchProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isFetching) return;
-    query.length
-      ? setSearchParams({ search: query, page: '1' })
-      : setSearchParams({ page: '1' });
-    onSearch(query);
+    localStorage.setItem('sw-search-query', query);
+    if (query.length) {
+      setSearchParams((params) => {
+        params.set('search', query);
+        return params;
+      });
+    } else {
+      setSearchParams((params) => {
+        params.delete('search');
+        return params;
+      });
+    }
+
+    setSearchParams((params) => {
+      params.set('page', '1');
+      return params;
+    });
   };
 
   return (

@@ -1,15 +1,16 @@
-import { PaginationProps } from '../../types';
-import './style.css';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { DataContext } from '../../App';
+import './style.css';
 
-const Pagination = ({
-  currentPage,
-  itemsPerPage,
-  onPageChange,
-  onItemsPerPageChange,
-}: PaginationProps) => {
-  const itemsCount = useContext(DataContext)?.count ?? 0;
+const Pagination = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const itemsCount = useContext(DataContext)?.count ?? 1;
+  const queryItemsPerPage = searchParams.get('itemsPerPage') ?? 10;
+  const [itemsPerPage] = useState(+queryItemsPerPage);
+  const queryCurrentPage = searchParams.get('page') ?? 1;
+  const [currentPage] = useState(+queryCurrentPage);
   const pageCount = Math.ceil(itemsCount / itemsPerPage);
 
   const pageNumbers = () =>
@@ -17,12 +18,28 @@ const Pagination = ({
       .fill(null)
       .map((_, i) => i + 1);
 
+  const handlePageChange = (newPage: number) => {
+    setSearchParams((params) => {
+      params.set('page', String(newPage));
+      params.delete('details');
+      return params;
+    });
+  };
+
+  const handleItemsPerPageChange = (value: number) => {
+    setSearchParams((params) => {
+      params.set('page', '1');
+      params.set('itemsPerPage', String(value));
+      return params;
+    });
+  };
+
   return (
     <ul className="pagination">
       <li className="pagination__item">
         <button
           className="pagination__btn"
-          onClick={() => onPageChange(1)}
+          onClick={() => handlePageChange(1)}
           disabled={currentPage === 1}
         >
           &lt;&lt;
@@ -31,7 +48,7 @@ const Pagination = ({
       <li className="pagination__item">
         <button
           className="pagination__btn"
-          onClick={() => onPageChange(currentPage - 1)}
+          onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
         >
           &lt;
@@ -41,7 +58,7 @@ const Pagination = ({
         <li className="pagination__item" key={pageNumber}>
           <button
             className="pagination__btn pagination__number"
-            onClick={() => onPageChange(pageNumber)}
+            onClick={() => handlePageChange(pageNumber)}
             disabled={currentPage === pageNumber}
           >
             {pageNumber}
@@ -51,7 +68,7 @@ const Pagination = ({
       <li className="pagination__item">
         <button
           className="pagination__btn"
-          onClick={() => onPageChange(currentPage + 1)}
+          onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === pageCount}
         >
           &gt;
@@ -60,7 +77,7 @@ const Pagination = ({
       <li className="pagination__item">
         <button
           className="pagination__btn"
-          onClick={() => onPageChange(pageCount)}
+          onClick={() => handlePageChange(pageCount)}
           disabled={currentPage === pageCount}
         >
           &gt;&gt;
@@ -71,7 +88,7 @@ const Pagination = ({
         <select
           className="pagination__select"
           value={itemsPerPage}
-          onChange={(e) => onItemsPerPageChange(+e.target.value)}
+          onChange={(e) => handleItemsPerPageChange(+e.target.value)}
         >
           <option value="10">10</option>
           <option value="20">20</option>

@@ -1,11 +1,21 @@
+import { useSearchParams } from 'react-router-dom';
 import type { CardProps } from '../../types';
 import './style.css';
 
-const Card = ({ item, onClick }: CardProps) => {
+const Card = ({ item }: CardProps) => {
   const id = item.url.split('/').at(-2) ?? null;
+  const [, setSearchParams] = useSearchParams();
+
+  const handleShowDetails = () => {
+    if (!id) return;
+    setSearchParams((params) => {
+      params.set('details', id);
+      return params;
+    });
+  };
 
   return (
-    <div className="card" onClick={() => onClick(id)}>
+    <div className="card" onClick={handleShowDetails}>
       <span className="card__name">{item.name}</span>
       <ul>
         <li>

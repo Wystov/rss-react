@@ -1,19 +1,28 @@
 import Card from '../Card';
-import type { ResultsProps } from '../../types';
 import './style.css';
 import { useContext } from 'react';
-import { DataContext } from '../../App';
+import { DataContext, SearchContext } from '../../App';
+import Pagination from '../Pagination';
 
-const Results = ({ showDetails, handleShowDetails }: ResultsProps) => {
-  const results = useContext(DataContext)?.results ?? [];
+const Results = () => {
+  const data = useContext(DataContext);
+  const search = useContext(SearchContext);
+
   const searchResults = () =>
-    results.map((item, i) => (
-      <Card item={item} key={i} onClick={handleShowDetails} />
-    ));
+    data?.results.map((item, i) => <Card item={item} key={i} />);
 
   return (
-    <section className={`results ${showDetails ? 'results--small' : ''}`}>
-      {searchResults()}
+    <section>
+      <p className="results-count">
+        We&apos;v got {data!.count} result{data!.count === 1 ? '' : 's'}
+        {search.length ? ` for "${search}"` : ''}
+      </p>
+      {data?.results.length && (
+        <>
+          <Pagination />
+          <div className="results">{searchResults()}</div>
+        </>
+      )}
     </section>
   );
 };

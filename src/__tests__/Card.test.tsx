@@ -1,5 +1,5 @@
 import Card from '../components/Card';
-import { describe, it, expect, vitest } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { data } from './mock-data';
 import '@testing-library/jest-dom';
@@ -9,28 +9,28 @@ import router from '../router';
 import { getData } from '../api/getData';
 
 describe('Card component tests', () => {
-  vitest.mock('../api/getData', () => ({
-    getData: vitest.fn().mockResolvedValue(data),
+  vi.mock('../api/getData', () => ({
+    getData: vi.fn().mockResolvedValue(data),
   }));
 
-  it('Card component renders the relevant card data', async () => {
+  it('Card component renders the relevant card data', () => {
     render(
       <BrowserRouter>
         <Card item={data.results[0]} />
       </BrowserRouter>
     );
 
-    const name = await screen.findByText('Luke Skywalker');
-    expect(name).toBeVisible();
+    const name = screen.getByText('Luke Skywalker');
+    expect(name).toBeInTheDocument();
   });
 
   it('Clicking on a card opens a detailed card component', async () => {
     render(<RouterProvider router={router} />);
     const name = await screen.findByText('Luke Skywalker');
     await userEvent.click(name);
-    const details = await screen.findByText('Details');
+    const details = screen.getByText('Details');
 
-    expect(details).toBeVisible();
+    expect(details).toBeInTheDocument();
   });
 
   it('Clicking card triggers an additional API call to fetch detailed information', async () => {

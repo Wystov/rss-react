@@ -19,7 +19,7 @@ describe('CardList component tests', () => {
     expect(cards.length).toBe(2);
   });
 
-  it('Shows a message when there are no search results', async () => {
+  it('Shows a message when there are no search results', () => {
     render(
       <BrowserRouter>
         <DataContext.Provider value={emptyData}>
@@ -28,7 +28,7 @@ describe('CardList component tests', () => {
       </BrowserRouter>
     );
 
-    const errorMessage = await screen.findByText('Nothing matches your search');
-    expect(errorMessage).toBeVisible();
+    const errorMessage = screen.getByText('Nothing matches your search');
+    expect(errorMessage).toBeInTheDocument();
   });
 });

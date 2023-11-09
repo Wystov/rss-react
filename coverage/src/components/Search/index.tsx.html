@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.36% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/55</span>
+                <span class='fraction'>33/55</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.36% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>9/55</span>
+                <span class='fraction'>33/55</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -125,6 +125,14 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -145,32 +153,24 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { SearchProps } from '../../types';
@@ -179,15 +179,15 @@ import './style.css';
 import { useSearchParams } from 'react-router-dom';
 import { SearchContext } from '../../App';
 &nbsp;
-const Search = <span class="fstat-no" title="function not covered" >({ isFetching }: SearchProps) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  const [query, setQuery] = useState(useContext(SearchContext));</span>
-<span class="cstat-no" title="statement not covered" >  const [, setSearchParams] = useSearchParams();</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >  const updateQuery = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {</span>
+const Search = ({ isFetching }: SearchProps) =&gt; {
+  const [query, setQuery] = useState(useContext(SearchContext));
+  const [, setSearchParams] = useSearchParams();
+&nbsp;
+  const updateQuery = <span class="fstat-no" title="function not covered" >(e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    setQuery(e.target.value.trim());</span>
 <span class="cstat-no" title="statement not covered" >  };</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >  const handleSubmit = (e: React.FormEvent) =&gt; {</span>
+&nbsp;
+  const handleSubmit = <span class="fstat-no" title="function not covered" >(e: React.FormEvent) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    e.preventDefault();</span>
 <span class="cstat-no" title="statement not covered" >    if (isFetching) return;</span>
 <span class="cstat-no" title="statement not covered" >    localStorage.setItem('sw-search-query', query);</span>
@@ -208,24 +208,24 @@ const Search = <span class="fstat-no" title="function not covered" >({ isFetchin
 <span class="cstat-no" title="statement not covered" >      return params;</span>
 <span class="cstat-no" title="statement not covered" >    });</span>
 <span class="cstat-no" title="statement not covered" >  };</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >  return (</span>
-<span class="cstat-no" title="statement not covered" >    &lt;section&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;form className="search" onSubmit={handleSubmit}&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;input</span>
-<span class="cstat-no" title="statement not covered" >          className="search__input"</span>
-<span class="cstat-no" title="statement not covered" >          type="text"</span>
-<span class="cstat-no" title="statement not covered" >          value={query}</span>
-<span class="cstat-no" title="statement not covered" >          onChange={updateQuery}</span>
-<span class="cstat-no" title="statement not covered" >          spellCheck={false}</span>
-<span class="cstat-no" title="statement not covered" >        /&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;button className="search__btn" type="submit" disabled={isFetching}&gt;</span>
-<span class="cstat-no" title="statement not covered" >          Search</span>
-<span class="cstat-no" title="statement not covered" >        &lt;/button&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;/form&gt;</span>
-<span class="cstat-no" title="statement not covered" >    &lt;/section&gt;</span>
-<span class="cstat-no" title="statement not covered" >  );</span>
-<span class="cstat-no" title="statement not covered" >};</span>
+&nbsp;
+  return (
+    &lt;section&gt;
+      &lt;form className="search" onSubmit={handleSubmit}&gt;
+        &lt;input
+          className="search__input"
+          type="text"
+          value={query}
+          onChange={updateQuery}
+          spellCheck={false}
+        /&gt;
+        &lt;button className="search__btn" type="submit" disabled={isFetching}&gt;
+          Search
+        &lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/section&gt;
+  );
+};
 &nbsp;
 export default Search;
 &nbsp;</pre></td></tr></table></pre>
@@ -235,7 +235,7 @@ export default Search;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-11-09T10:42:02.840Z
+                at 2023-11-09T12:03:32.811Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

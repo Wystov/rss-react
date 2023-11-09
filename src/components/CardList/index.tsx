@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { DataContext, SearchContext } from '../../App';
 import Pagination from '../Pagination';
 
-const Results = () => {
+const CardList = () => {
   const data = useContext(DataContext);
   const search = useContext(SearchContext);
 
@@ -35,4 +35,4 @@ const Results = () => {
   );
 };
 
-export default Results;
+export default CardList;

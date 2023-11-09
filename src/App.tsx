@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext } from 'react';
 import Search from './components/Search';
-import Results from './components/Results';
+import CardList from './components/CardList';
 import ErrorComponent from './components/ErrorComponent';
 import type { Data } from './types';
 import { getData } from './api/getData';
@@ -95,7 +95,7 @@ const App = () => {
             <Preloader />
           ) : (
             <DataContext.Provider value={data}>
-              <Results />
+              <CardList />
             </DataContext.Provider>
           )}
         </SearchContext.Provider>

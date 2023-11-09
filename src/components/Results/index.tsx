@@ -13,15 +13,23 @@ const Results = () => {
 
   return (
     <section>
-      <p className="results-count">
-        We&apos;v got {data!.count} result{data!.count === 1 ? '' : 's'}
-        {search.length ? ` for "${search}"` : ''}
-      </p>
-      {data?.results.length && (
+      {data ? (
+        <p className="results-count">
+          We&apos;v got {data!.count} result{data!.count === 1 ? '' : 's'}
+          {search.length ? ` for "${search}"` : ''}
+        </p>
+      ) : (
+        <div className="error">
+          Error occured on getting data, please try later
+        </div>
+      )}
+      {data?.results.length ? (
         <>
           <Pagination />
           <div className="results">{searchResults()}</div>
         </>
+      ) : (
+        <div className="error">Nothing matches your search</div>
       )}
     </section>
   );

@@ -78,26 +78,6 @@ const App = () => {
         params.delete('details');
         return params;
       });
-      return;
-    }
-  };
-
-  const content = () => {
-    switch (true) {
-      case isFetching:
-        return <Preloader />;
-      case data !== null:
-        return (
-          <DataContext.Provider value={data}>
-            <Results />
-          </DataContext.Provider>
-        );
-      default:
-        return (
-          <div className="error">
-            Error occured on getting data, please try later
-          </div>
-        );
     }
   };
 
@@ -111,7 +91,13 @@ const App = () => {
       >
         <SearchContext.Provider value={search}>
           <Search isFetching={isFetching} />
-          {content()}
+          {isFetching ? (
+            <Preloader />
+          ) : (
+            <DataContext.Provider value={data}>
+              <Results />
+            </DataContext.Provider>
+          )}
         </SearchContext.Provider>
         <ErrorComponent />
       </main>

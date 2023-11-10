@@ -82,10 +82,7 @@ const MainPage = () => {
 
   return (
     <>
-      <main
-        className={`main ${showDetails ? 'main--small' : ''}`}
-        onClick={() => closeDetails()}
-      >
+      <main className={`main ${showDetails ? 'main--small' : ''}`}>
         <SearchContext.Provider value={search}>
           <Search isFetching={isFetching} />
           {isFetching ? (
@@ -99,10 +96,13 @@ const MainPage = () => {
         <ErrorComponent />
       </main>
       {showDetails && (
-        <aside className="details">
-          <Outlet />
-          <CloseBtn onClick={() => closeDetails()} />
-        </aside>
+        <>
+          <div className="overlay" onClick={closeDetails} />
+          <aside className="details">
+            <Outlet />
+            <CloseBtn onClick={closeDetails} />
+          </aside>
+        </>
       )}
     </>
   );

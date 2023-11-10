@@ -1,0 +1,21 @@
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 0;
+}
+
+.pagination__item {
+  list-style: none;
+
+  &:last-child {
+    margin-left: auto;
+  }
+}
+
+.pagination__number:disabled {
+  border: 1px solid white;
+  border-radius: 5px;
+  color: white;
+  background-color: transparent;
+}

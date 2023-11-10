@@ -2,7 +2,7 @@ import type { SearchProps } from '../../types';
 import { useState, useContext } from 'react';
 import './style.css';
 import { useSearchParams } from 'react-router-dom';
-import { SearchContext } from '../../App';
+import { SearchContext } from '../../pages/main';
 
 const Search = ({ isFetching }: SearchProps) => {
   const [query, setQuery] = useState(useContext(SearchContext));

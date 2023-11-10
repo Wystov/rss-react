@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { DataContext } from '../../App';
+import { DataContext } from '../../pages/main';
 import './style.css';
 
 const Pagination = () => {

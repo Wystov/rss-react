@@ -2,7 +2,7 @@ import CardList from '../components/CardList';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { data, emptyData } from './mock-data';
-import { DataContext } from '../App';
+import { DataContext } from '../pages/main';
 import { BrowserRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
 

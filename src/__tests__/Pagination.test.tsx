@@ -3,7 +3,7 @@ import { describe, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { DataContext } from '../App';
+import { DataContext } from '../pages/main';
 import userEvent from '@testing-library/user-event';
 
 describe('Pagination component test', () => {

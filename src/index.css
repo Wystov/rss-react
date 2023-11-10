@@ -13,10 +13,17 @@ body {
 .app {
   display: flex;
   gap: 20px;
-  margin: 25px auto;
+  margin: auto;
   max-width: 1280px;
-  padding: 0 50px;
+  padding: 25px 50px;
   font-family: 'Poppins', sans-serif;
+}
+
+.app,
+.main,
+.details,
+.container-404 {
+  height: calc(100vh - 50px);
 }
 
 .main {
@@ -39,4 +46,14 @@ body {
   background-color: #464646;
   border-radius: 10px;
   overflow: hidden;
+}
+
+.container-404 {
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.container-404-inner {
+  text-align: center;
 }

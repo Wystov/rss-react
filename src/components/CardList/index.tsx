@@ -1,7 +1,7 @@
 import Card from '../Card';
 import './style.css';
 import { useContext } from 'react';
-import { DataContext, SearchContext } from '../../App';
+import { DataContext, SearchContext } from '../../pages/main';
 import Pagination from '../Pagination';
 
 const CardList = () => {

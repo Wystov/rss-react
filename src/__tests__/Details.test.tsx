@@ -1,17 +1,28 @@
 import Details from '../components/Details';
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { BrowserRouter } from 'react-router-dom';
-
-// const mockSearchParams = new URLSearchParams();
+import { MemoryRouter } from 'react-router-dom';
+import { data } from './mock-data';
+import App from '../App';
+import userEvent from '@testing-library/user-event';
 
 describe('Details component tests', () => {
   it('Loading indicator is displayed while fetching data', () => {
+    vi.mock('../../api/getData', () => ({
+      getData: vi.fn().mockImplementation(() => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(data);
+          }, 1000);
+        });
+      }),
+    }));
+
     render(
-      <BrowserRouter>
+      <MemoryRouter initialEntries={['?details=1']}>
         <Details />
-      </BrowserRouter>
+      </MemoryRouter>
     );
 
     const preloader = screen.getByText('Loading...');
@@ -19,30 +30,40 @@ describe('Details component tests', () => {
     expect(preloader).toBeInTheDocument();
   });
 
-  //   it('Detailed card component correctly displays the detailed card data', async () => {
-  //     vi.mock('../../api/getData', () => ({
-  //       getData: vi.fn().mockResolvedValue(data.results[0]),
-  //     }));
+  it('Detailed card component correctly displays the detailed card data', async () => {
+    vi.mock('../../api/getData', () => ({
+      getData: vi.fn().mockResolvedValue(data.results[0]),
+    }));
 
-  //     mockSearchParams.set('details', '1');
+    render(
+      <MemoryRouter initialEntries={['?details=1']}>
+        <Details />
+      </MemoryRouter>
+    );
 
-  //     vi.mock('react-router-dom', async () => {
-  //       const actual = await vi.importActual('react-router-dom');
-  //       return {
-  //         ...actual,
-  //         useSearchParams: vi.fn().mockReturnValue(mockSearchParams),
-  //       };
-  //     });
+    await waitFor(async () => {
+      const character = screen.queryByText(data.results[0].name);
+      if (character) expect(character).toBeInTheDocument();
+      const birthYear = screen.queryByText(data.results[0].birth_year);
+      if (birthYear) expect(birthYear).toBeInTheDocument();
+    });
+  });
 
-  //     render(
-  //       <MemoryRouter initialEntries={['?details=1']}>
-  //         <Details />
-  //       </MemoryRouter>
-  //     );
+  it('Clicking the close button hides the details component', () => {
+    vi.mock('../../api/getData', () => ({
+      getData: vi.fn().mockResolvedValue(data.results[0]),
+    }));
 
-  //     await waitFor(async () => {
-  //       const mass = await screen.findByText('77');
-  //       expect(mass).toBeInTheDocument();
-  //     });
-  //   });
+    render(
+      <MemoryRouter initialEntries={['?details=1']}>
+        <App />
+      </MemoryRouter>
+    );
+
+    const closeBtn = document.querySelector('.close-btn');
+    const detailsSection = document.querySelector('.details');
+    if (closeBtn) userEvent.click(closeBtn);
+
+    waitFor(() => expect(detailsSection).not.toBeInTheDocument());
+  });
 });

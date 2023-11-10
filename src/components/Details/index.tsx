@@ -8,11 +8,12 @@ const Details = () => {
   const [searchParams] = useSearchParams();
   const id = searchParams.get('details');
   const [data, setData] = useState<ResultItem | null>(null);
-  const [isFetching, setIsFetching] = useState(true);
+  const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
     const handleDetails = async () => {
       if (!id) return;
+      setIsFetching(true);
       const data = await getData({ id });
       if (data && 'name' in data) setData(data);
       setIsFetching(false);
@@ -28,14 +29,30 @@ const Details = () => {
       case data !== null:
         return (
           <>
-            <p>Name: {data?.name}</p>
-            <p>Gender: {data?.gender}</p>
-            <p>Height: {data?.height}</p>
-            <p>Mass: {data?.mass}</p>
-            <p>Birth year: {data?.birth_year}</p>
-            <p>Hair color: {data?.hair_color}</p>
-            <p>Skin color: {data?.skin_color}</p>
-            <p>Eye color: {data?.eye_color}</p>
+            <p>
+              Name: <span>{data?.name}</span>
+            </p>
+            <p>
+              Gender: <span>{data?.gender}</span>
+            </p>
+            <p>
+              Height: <span>{data?.height}</span>
+            </p>
+            <p>
+              Mass: <span>{data?.mass}</span>
+            </p>
+            <p>
+              Birth year: <span>{data?.birth_year}</span>
+            </p>
+            <p>
+              Hair color: <span>{data?.hair_color}</span>
+            </p>
+            <p>
+              Skin color: <span>{data?.skin_color}</span>
+            </p>
+            <p>
+              Eye color: <span>{data?.eye_color}</span>
+            </p>
           </>
         );
       default:

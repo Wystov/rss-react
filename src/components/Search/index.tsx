@@ -1,12 +1,16 @@
-import type { SearchProps } from '../../types';
-import { useState, useContext } from 'react';
+import type { RootState, SearchProps } from '../../types';
+import { useState } from 'react';
 import './style.css';
 import { useSearchParams } from 'react-router-dom';
-import { SearchContext } from '../../pages/main';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSearch } from '../../store/searchSlice';
 
 const Search = ({ isFetching }: SearchProps) => {
-  const [query, setQuery] = useState(useContext(SearchContext));
+  const [query, setQuery] = useState(
+    useSelector((state: RootState) => state.search.query)
+  );
   const [, setSearchParams] = useSearchParams();
+  const dispatch = useDispatch();
 
   const updateQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value.trim());
@@ -16,6 +20,7 @@ const Search = ({ isFetching }: SearchProps) => {
     e.preventDefault();
     if (isFetching) return;
     localStorage.setItem('sw-search-query', query);
+    dispatch(setSearch(query));
     if (query.length) {
       setSearchParams((params) => {
         params.set('search', query);

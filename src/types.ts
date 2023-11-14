@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import store from './store';
 
 export interface SearchProps {
   isFetching: boolean;
@@ -41,3 +42,5 @@ export type UrlParams = { id: string } | { query: string; page: number };
 export interface CloseBtnProps {
   onClick: () => void;
 }
+
+export type RootState = ReturnType<typeof store.getState>;

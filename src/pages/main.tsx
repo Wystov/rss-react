@@ -2,12 +2,14 @@ import { useState, useEffect, createContext } from 'react';
 import Search from '../components/Search';
 import CardList from '../components/CardList';
 import ErrorComponent from '../components/ErrorComponent';
-import type { Data } from '../types';
+import type { Data, RootState } from '../types';
 import { getData } from '../api/getData';
 import Preloader from '../components/common/Preloader';
 import { useSearchParams } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import CloseBtn from '../components/common/CloseBtn/CloseBtn';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSearch } from '../store/searchSlice';
 
 export const DataContext = createContext<Data | null>(null);
 export const SearchContext = createContext<string>('');
@@ -15,9 +17,7 @@ export const SearchContext = createContext<string>('');
 const MainPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isFetching, setIsFetching] = useState(false);
-  const initialSearchValue =
-    searchParams.get('search') ?? localStorage.getItem('sw-search-query');
-  const [search, setSearch] = useState(initialSearchValue ?? '');
+  const search = useSelector((state: RootState) => state.search.query);
   const [data, setData] = useState<Data | null>(null);
   const paramsPage = searchParams.get('page');
   const [page, setPage] = useState(paramsPage ? +paramsPage : 1);
@@ -27,6 +27,7 @@ const MainPage = () => {
   );
   const hasId = searchParams.get('details') ? true : false;
   const [showDetails, setShowDetails] = useState(hasId);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleSearch = async () => {
@@ -58,7 +59,7 @@ const MainPage = () => {
   useEffect(() => {
     const handleQueryParamsChange = () => {
       const newSearch = searchParams.get('search');
-      setSearch(newSearch ?? '');
+      dispatch(setSearch(newSearch ?? ''));
       const newPage = searchParams.get('page');
       if (newPage) setPage(+newPage);
       const itemsPerPage = searchParams.get('itemsPerPage');
@@ -83,16 +84,14 @@ const MainPage = () => {
   return (
     <>
       <main className={`main ${showDetails ? 'main--small' : ''}`}>
-        <SearchContext.Provider value={search}>
-          <Search isFetching={isFetching} />
-          {isFetching ? (
-            <Preloader />
-          ) : (
-            <DataContext.Provider value={data}>
-              <CardList />
-            </DataContext.Provider>
-          )}
-        </SearchContext.Provider>
+        <Search isFetching={isFetching} />
+        {isFetching ? (
+          <Preloader />
+        ) : (
+          <DataContext.Provider value={data}>
+            <CardList />
+          </DataContext.Provider>
+        )}
         <ErrorComponent />
       </main>
       {showDetails && (

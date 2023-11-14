@@ -1,31 +1,22 @@
-import { useEffect, useState } from 'react';
-import { ResultItem, RootState } from '../../config/types';
+import type { RootState } from '../../config/types';
 import Preloader from '../common/Preloader';
 import { useSelector } from 'react-redux';
+import { useGetDetailsQuery } from '../../api/getData';
 
 const Details = () => {
+  const isLoading = useSelector(
+    (state: RootState) => state.loader.isDetailsLoading
+  );
+
   const id = useSelector((state: RootState) => state.details.id);
-  const [data, setData] = useState<ResultItem | null>(null);
-  const [isFetching, setIsFetching] = useState(false);
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    const handleDetails = async () => {
-      if (!id) return;
-      setIsFetching(true);
-      // const data = await getData({ id: id.toString() });
-      if (data && 'name' in data) setData(data);
-      setIsFetching(false);
-    };
-
-    handleDetails();
-  }, [id]);
+  const { data } = useGetDetailsQuery({ id: id!.toString() });
 
   const content = () => {
     switch (true) {
-      case isFetching:
+      case isLoading:
         return <Preloader />;
-      case data !== null:
+      case data !== undefined:
         return (
           <>
             <p>

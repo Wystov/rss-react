@@ -11,6 +11,7 @@ import CloseBtn from '../components/common/CloseBtn/CloseBtn';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearch } from '../store/searchSlice';
 import { setCurrentPage, setItemsPerPage } from '../store/paginationSlice';
+import { setDetailsId } from '../store/detailsSlice';
 
 export const DataContext = createContext<Data | null>(null);
 export const SearchContext = createContext<string>('');
@@ -24,8 +25,10 @@ const MainPage = () => {
   const itemsPerPage = useSelector(
     (state: RootState) => state.pagination.itemsPerPage
   );
-  const hasId = searchParams.get('details') ? true : false;
-  const [showDetails, setShowDetails] = useState(hasId);
+
+  const showDetails = useSelector(
+    (state: RootState) => state.details.id !== null
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -63,8 +66,8 @@ const MainPage = () => {
       if (newPage) dispatch(setCurrentPage(+newPage));
       const itemsPerPage = searchParams.get('itemsPerPage');
       if (itemsPerPage) dispatch(setItemsPerPage(+itemsPerPage));
-      const showDetailsId = searchParams.get('details');
-      if (showDetailsId) setShowDetails(true);
+      const detailsId = searchParams.get('details');
+      dispatch(setDetailsId(detailsId));
     };
 
     handleQueryParamsChange();
@@ -72,7 +75,7 @@ const MainPage = () => {
 
   const closeDetails = () => {
     if (showDetails) {
-      setShowDetails(false);
+      setDetailsId(null);
       setSearchParams((params) => {
         params.delete('details');
         return params;

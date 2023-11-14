@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { ResultItem } from '../../config/types';
+import { ResultItem, RootState } from '../../config/types';
 import Preloader from '../common/Preloader';
 import { getData } from '../../api/getData';
+import { useSelector } from 'react-redux';
 
 const Details = () => {
-  const [searchParams] = useSearchParams();
-  const id = searchParams.get('details');
+  const id = useSelector((state: RootState) => state.details.id);
   const [data, setData] = useState<ResultItem | null>(null);
   const [isFetching, setIsFetching] = useState(false);
 
@@ -15,7 +14,7 @@ const Details = () => {
     const handleDetails = async () => {
       if (!id) return;
       setIsFetching(true);
-      const data = await getData({ id });
+      const data = await getData({ id: id.toString() });
       if (data && 'name' in data) setData(data);
       setIsFetching(false);
     };

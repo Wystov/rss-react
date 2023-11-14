@@ -6,3 +6,5 @@ export const initialSearchValue =
 export const initialItemsPerPage = searchParams.get('itemsPerPage');
 
 export const initialCurrentPage = searchParams.get('page');
+
+export const initialDetailsId = searchParams.get('details');

@@ -1,9 +1,8 @@
-import { useState, useEffect, createContext } from 'react';
+import { useEffect, createContext } from 'react';
 import Search from '../components/Search';
 import CardList from '../components/CardList';
 import ErrorComponent from '../components/ErrorComponent';
 import type { Data, RootState } from '../config/types';
-import { getData } from '../api/getData';
 import Preloader from '../components/common/Preloader';
 import { useSearchParams } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
@@ -12,51 +11,37 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSearch } from '../store/searchSlice';
 import { setCurrentPage, setItemsPerPage } from '../store/paginationSlice';
 import { setDetailsId } from '../store/detailsSlice';
+import { useGetAllPeopleQuery } from '../api/getData';
 
-export const DataContext = createContext<Data | null>(null);
+export const DataContext = createContext<Data | undefined>(undefined);
 export const SearchContext = createContext<string>('');
 
 const MainPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [isFetching, setIsFetching] = useState(false);
   const search = useSelector((state: RootState) => state.search.query);
-  const [data, setData] = useState<Data | null>(null);
-  const page = useSelector((state: RootState) => state.pagination.currentPage);
   const itemsPerPage = useSelector(
     (state: RootState) => state.pagination.itemsPerPage
   );
 
+  const apiPage = useSelector((state: RootState) => {
+    const { currentPage } = state.pagination;
+    return itemsPerPage === 20 ? currentPage * 2 - 1 : currentPage;
+  });
+
   const showDetails = useSelector(
     (state: RootState) => state.details.id !== null
   );
+
+  const isLoading = useSelector(
+    (state: RootState) => state.loader.isMainLoading
+  );
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const handleSearch = async () => {
-      setData(null);
-      setIsFetching(true);
-
-      let apiPage = page;
-      if (itemsPerPage === 20) {
-        apiPage = 2 * apiPage - 1;
-      }
-
-      const data = await getData({ query: search, page: apiPage });
-      if (!(data && 'results' in data)) {
-        setIsFetching(false);
-        return;
-      }
-      if (itemsPerPage === 20 && data?.next) {
-        const nextData = await getData({ query: search, page: apiPage + 1 });
-        if (nextData && 'results' in nextData)
-          data.results.push(...nextData.results);
-      }
-      setData(data);
-      setIsFetching(false);
-    };
-
-    handleSearch();
-  }, [search, page, itemsPerPage]);
+  const { data } = useGetAllPeopleQuery({
+    query: search,
+    page: apiPage,
+    itemsPerPage,
+  });
 
   useEffect(() => {
     const handleQueryParamsChange = () => {
@@ -86,8 +71,8 @@ const MainPage = () => {
   return (
     <>
       <main className={`main ${showDetails ? 'main--small' : ''}`}>
-        <Search isFetching={isFetching} />
-        {isFetching ? (
+        <Search isFetching={isLoading} />
+        {isLoading ? (
           <Preloader />
         ) : (
           <DataContext.Provider value={data}>

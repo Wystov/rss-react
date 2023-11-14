@@ -37,7 +37,9 @@ export interface DetailsProps {
   data: ResultItem | null;
 }
 
-export type UrlParams = { id: string } | { query: string; page: number };
+export type UrlParams =
+  | { id: string }
+  | { query: string; page: number; itemsPerPage: number };
 
 export interface CloseBtnProps {
   onClick: () => void;

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ResultItem, RootState } from '../../config/types';
 import Preloader from '../common/Preloader';
-import { getData } from '../../api/getData';
 import { useSelector } from 'react-redux';
 
 const Details = () => {
@@ -14,7 +13,7 @@ const Details = () => {
     const handleDetails = async () => {
       if (!id) return;
       setIsFetching(true);
-      const data = await getData({ id: id.toString() });
+      // const data = await getData({ id: id.toString() });
       if (data && 'name' in data) setData(data);
       setIsFetching(false);
     };

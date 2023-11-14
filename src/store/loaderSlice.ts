@@ -3,17 +3,19 @@ import { createSlice } from '@reduxjs/toolkit';
 const loaderSlice = createSlice({
   name: 'loader',
   initialState: {
-    mainIsLoading: false,
-    detailsIsLoading: false,
+    isMainLoading: false,
+    isDetailsLoading: false,
   },
   reducers: {
     setMainIsLoading: (state, action) => {
-      state.mainIsLoading = action.payload;
+      state.isMainLoading = action.payload;
     },
     setDetailsIsLoading: (state, action) => {
-      state.detailsIsLoading = action.payload;
+      state.isDetailsLoading = action.payload;
     },
   },
 });
+
+export const { setMainIsLoading, setDetailsIsLoading } = loaderSlice.actions;
 
 export default loaderSlice.reducer;

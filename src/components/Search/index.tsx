@@ -48,6 +48,7 @@ const Search = ({ isFetching }: SearchProps) => {
           value={query}
           onChange={updateQuery}
           spellCheck={false}
+          disabled={isFetching}
         />
         <button className="search__btn" type="submit" disabled={isFetching}>
           Search

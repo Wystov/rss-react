@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ResultItem } from '../../types';
+import { ResultItem } from '../../config/types';
 import Preloader from '../common/Preloader';
 import { getData } from '../../api/getData';
 

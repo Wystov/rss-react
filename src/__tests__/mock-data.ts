@@ -1,4 +1,4 @@
-import { Data } from '../types';
+import { Data } from '../config/types';
 
 export const data: Data = {
   count: 2,

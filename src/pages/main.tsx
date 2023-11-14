@@ -2,7 +2,7 @@ import { useState, useEffect, createContext } from 'react';
 import Search from '../components/Search';
 import CardList from '../components/CardList';
 import ErrorComponent from '../components/ErrorComponent';
-import type { Data, RootState } from '../types';
+import type { Data, RootState } from '../config/types';
 import { getData } from '../api/getData';
 import Preloader from '../components/common/Preloader';
 import { useSearchParams } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { Outlet } from 'react-router-dom';
 import CloseBtn from '../components/common/CloseBtn/CloseBtn';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearch } from '../store/searchSlice';
+import { setCurrentPage, setItemsPerPage } from '../store/paginationSlice';
 
 export const DataContext = createContext<Data | null>(null);
 export const SearchContext = createContext<string>('');
@@ -19,11 +20,9 @@ const MainPage = () => {
   const [isFetching, setIsFetching] = useState(false);
   const search = useSelector((state: RootState) => state.search.query);
   const [data, setData] = useState<Data | null>(null);
-  const paramsPage = searchParams.get('page');
-  const [page, setPage] = useState(paramsPage ? +paramsPage : 1);
-  const paramsItemsPerPage = searchParams.get('itemsPerPage');
-  const [itemsPerPage, setItemsPerPage] = useState(
-    paramsItemsPerPage ? +paramsItemsPerPage : 10
+  const page = useSelector((state: RootState) => state.pagination.currentPage);
+  const itemsPerPage = useSelector(
+    (state: RootState) => state.pagination.itemsPerPage
   );
   const hasId = searchParams.get('details') ? true : false;
   const [showDetails, setShowDetails] = useState(hasId);
@@ -61,9 +60,9 @@ const MainPage = () => {
       const newSearch = searchParams.get('search');
       dispatch(setSearch(newSearch ?? ''));
       const newPage = searchParams.get('page');
-      if (newPage) setPage(+newPage);
+      if (newPage) dispatch(setCurrentPage(+newPage));
       const itemsPerPage = searchParams.get('itemsPerPage');
-      if (itemsPerPage) setItemsPerPage(+itemsPerPage);
+      if (itemsPerPage) dispatch(setItemsPerPage(+itemsPerPage));
       const showDetailsId = searchParams.get('details');
       if (showDetailsId) setShowDetails(true);
     };

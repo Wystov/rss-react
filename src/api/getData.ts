@@ -1,4 +1,4 @@
-import { Data, ResultItem, UrlParams } from '../types';
+import { Data, ResultItem, UrlParams } from '../config/types';
 
 const BASE_URL = 'https://swapi.dev/api/people/';
 const SEARCH_QUERY = 'search=';

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import store from './store';
+import store from '../store';
 
 export interface SearchProps {
   isFetching: boolean;

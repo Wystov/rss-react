@@ -1,8 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-const searchParams = new URLSearchParams(window.location.search);
-const initialSearchValue =
-  searchParams.get('search') ?? localStorage.getItem('sw-search-query');
+import { initialSearchValue } from '../config';
 
 const searchSlice = createSlice({
   name: 'search',

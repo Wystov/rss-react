@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-import type { CardProps } from '../../types';
+import type { CardProps } from '../../config/types';
 import './style.css';
 
 const Card = ({ item }: CardProps) => {

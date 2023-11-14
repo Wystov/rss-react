@@ -1,16 +1,21 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { DataContext } from '../../pages/main';
 import './style.css';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../config/types';
 
 const Pagination = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
 
   const itemsCount = useContext(DataContext)?.count ?? 1;
-  const queryItemsPerPage = searchParams.get('itemsPerPage') ?? 10;
-  const [itemsPerPage] = useState(+queryItemsPerPage);
-  const queryCurrentPage = searchParams.get('page') ?? 1;
-  const [currentPage] = useState(+queryCurrentPage);
+  const itemsPerPage = useSelector(
+    (state: RootState) => state.pagination.itemsPerPage
+  );
+
+  const currentPage = useSelector(
+    (state: RootState) => state.pagination.currentPage
+  );
   const pageCount = Math.ceil(itemsCount / itemsPerPage);
 
   const pageNumbers = () =>

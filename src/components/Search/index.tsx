@@ -1,4 +1,4 @@
-import type { RootState, SearchProps } from '../../types';
+import type { RootState, SearchProps } from '../../config/types';
 import { useState } from 'react';
 import './style.css';
 import { useSearchParams } from 'react-router-dom';

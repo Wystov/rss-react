@@ -1,4 +1,4 @@
-import { CloseBtnProps } from '../../../types';
+import { CloseBtnProps } from '../../../config/types';
 import './style.css';
 
 const CloseBtn = ({ onClick }: CloseBtnProps) => (

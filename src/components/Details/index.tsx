@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { useGetDetailsQuery } from '../../api/getData';
 
 const Details = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
   const isLoading = useSelector(
     (state: RootState) => state.loader.isDetailsLoading
   );

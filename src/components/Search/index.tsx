@@ -1,15 +1,19 @@
-import type { RootState, SearchProps } from '../../config/types';
+import type { RootState } from '../../config/types';
 import { useState } from 'react';
 import './style.css';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearch } from '../../store/searchSlice';
 
-const Search = ({ isFetching }: SearchProps) => {
+const Search = () => {
   const [query, setQuery] = useState(
     useSelector((state: RootState) => state.search.query)
   );
   const [, setSearchParams] = useSearchParams();
+
+  const isLoading = useSelector(
+    (state: RootState) => state.loader.isMainLoading
+  );
   const dispatch = useDispatch();
 
   const updateQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,7 +22,7 @@ const Search = ({ isFetching }: SearchProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (isFetching) return;
+    if (isLoading) return;
     localStorage.setItem('sw-search-query', query);
     dispatch(setSearch(query));
     if (query.length) {
@@ -48,9 +52,9 @@ const Search = ({ isFetching }: SearchProps) => {
           value={query}
           onChange={updateQuery}
           spellCheck={false}
-          disabled={isFetching}
+          disabled={isLoading}
         />
-        <button className="search__btn" type="submit" disabled={isFetching}>
+        <button className="search__btn" type="submit" disabled={isLoading}>
           Search
         </button>
       </form>

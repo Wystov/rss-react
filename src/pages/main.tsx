@@ -56,7 +56,7 @@ const MainPage = () => {
     };
 
     handleQueryParamsChange();
-  }, [searchParams]);
+  }, [searchParams, dispatch]);
 
   const closeDetails = () => {
     if (showDetails) {
@@ -71,7 +71,7 @@ const MainPage = () => {
   return (
     <>
       <main className={`main ${showDetails ? 'main--small' : ''}`}>
-        <Search isFetching={isLoading} />
+        <Search />
         {isLoading ? (
           <Preloader />
         ) : (

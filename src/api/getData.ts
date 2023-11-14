@@ -16,11 +16,11 @@ export const swapi = createApi({
   endpoints: (builder) => ({
     getAllPeople: builder.query<Data, SearchUrlParams>({
       async queryFn(params, { dispatch }, _, fetchWithBQ) {
-        console.log(params);
         const { page, itemsPerPage } = params;
-
         dispatch(setMainIsLoading(true));
+
         const response = await fetchWithBQ(buildPath(params));
+
         if (itemsPerPage === 20 && response.data.next) {
           const nextParams = {
             ...params,
@@ -29,7 +29,7 @@ export const swapi = createApi({
           const nextResponse = await fetchWithBQ(buildPath(nextParams));
           response.data.results.push(...nextResponse.data.results);
         }
-        console.log(response.data);
+
         dispatch(setMainIsLoading(false));
         return { data: response.data };
       },

@@ -1,10 +1,6 @@
 import type { ReactNode } from 'react';
 import store from '../store';
 
-export interface SearchProps {
-  isFetching: boolean;
-}
-
 export interface ResultItem {
   name: string;
   height: string;

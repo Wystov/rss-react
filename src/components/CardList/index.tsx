@@ -1,12 +1,14 @@
 import Card from '../Card';
 import './style.css';
 import { useContext } from 'react';
-import { DataContext, SearchContext } from '../../pages/main';
+import { DataContext } from '../../pages/main';
 import Pagination from '../Pagination';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../config/types';
 
 const CardList = () => {
   const data = useContext(DataContext);
-  const search = useContext(SearchContext);
+  const search = useSelector((state: RootState) => state.search.query);
 
   const searchResults = () =>
     data?.results.map((item, i) => <Card item={item} key={i} />);

@@ -26,23 +26,14 @@ const Search = () => {
     if (isLoading) return;
     localStorage.setItem('sw-search-query', query);
     dispatch(setSearch(query));
-    if (query.length) {
-      setSearchParams((params) => {
-        params.set('search', query);
-        return params;
-      });
-    } else {
-      setSearchParams((params) => {
-        params.delete('search');
-        return params;
-      });
-    }
 
-    dispatch(setCurrentPage(1));
     setSearchParams((params) => {
+      query.length ? params.set('search', query) : params.delete('search');
       params.set('page', '1');
       return params;
     });
+
+    dispatch(setCurrentPage(1));
   };
 
   return (

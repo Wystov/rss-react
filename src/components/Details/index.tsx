@@ -1,10 +1,20 @@
 import type { RootState } from '../../config/types';
 import Preloader from '../common/Preloader';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useGetDetailsQuery } from '../../api/getData';
+import { useSearchParams } from 'react-router-dom';
+import { setDetailsId } from '../../store/detailsSlice';
+import CloseBtn from '../common/CloseBtn/CloseBtn';
+import './style.css';
 
 const Details = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const [, setSearchParams] = useSearchParams();
+
+  const showDetails = useSelector(
+    (state: RootState) => state.details.id !== null
+  );
 
   const isLoading = useSelector(
     (state: RootState) => state.loader.isDetailsLoading
@@ -14,13 +24,25 @@ const Details = () => {
 
   const { data } = useGetDetailsQuery({ id: id!.toString() });
 
+  const dispatch = useDispatch();
+
+  const closeDetails = () => {
+    if (showDetails) {
+      dispatch(setDetailsId(null));
+      setSearchParams((params) => {
+        params.delete('details');
+        return params;
+      });
+    }
+  };
+
   const content = () => {
     switch (true) {
       case isLoading:
         return <Preloader />;
       case data !== undefined:
         return (
-          <>
+          <div>
             <p>
               Name: <span>{data?.name}</span>
             </p>
@@ -45,7 +67,7 @@ const Details = () => {
             <p>
               Eye color: <span>{data?.eye_color}</span>
             </p>
-          </>
+          </div>
         );
       default:
         return <div>Failed to load details</div>;
@@ -53,10 +75,14 @@ const Details = () => {
   };
 
   return (
-    <div className="results__details">
-      <h3>Details</h3>
-      {content()}
-    </div>
+    <>
+      <div className="overlay" onClick={closeDetails} />
+      <div className="details">
+        <h3>Details</h3>
+        {content()}
+        <CloseBtn onClick={closeDetails} />
+      </div>
+    </>
   );
 };
 

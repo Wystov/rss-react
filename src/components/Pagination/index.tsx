@@ -1,18 +1,31 @@
-import { useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { DataContext } from '../../pages/main';
 import './style.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../config/types';
 import { setCurrentPage, setItemsPerPage } from '../../store/paginationSlice';
+import { useGetAllPeopleQuery } from '../../api/getData';
 
 const Pagination = () => {
   const [, setSearchParams] = useSearchParams();
 
-  const itemsCount = useContext(DataContext)?.count ?? 1;
+  const search = useSelector((state: RootState) => state.search.query);
+
   const itemsPerPage = useSelector(
     (state: RootState) => state.pagination.itemsPerPage
   );
+
+  const apiPage = useSelector((state: RootState) => {
+    const { currentPage } = state.pagination;
+    return itemsPerPage === 20 ? currentPage * 2 - 1 : currentPage;
+  });
+
+  const { data } = useGetAllPeopleQuery({
+    query: search,
+    page: apiPage,
+    itemsPerPage,
+  });
+
+  const itemsCount = data?.count ?? 1;
 
   const currentPage = useSelector(
     (state: RootState) => state.pagination.currentPage

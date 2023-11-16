@@ -1,19 +1,34 @@
 import Card from '../Card';
 import './style.css';
-import { useContext } from 'react';
-import { DataContext } from '../../pages/main';
 import Pagination from '../Pagination';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../config/types';
+import { useGetAllPeopleQuery } from '../../api/getData';
+import Preloader from '../common/Preloader';
 
 const CardList = () => {
-  const data = useContext(DataContext);
+  const isLoading = useSelector(
+    (state: RootState) => state.loader.isMainLoading
+  );
   const search = useSelector((state: RootState) => state.search.query);
+  const itemsPerPage = useSelector(
+    (state: RootState) => state.pagination.itemsPerPage
+  );
+  const apiPage = useSelector((state: RootState) => {
+    const { currentPage } = state.pagination;
+    return itemsPerPage === 20 ? currentPage * 2 - 1 : currentPage;
+  });
+
+  const { data } = useGetAllPeopleQuery({
+    query: search,
+    page: apiPage,
+    itemsPerPage,
+  });
 
   const searchResults = () =>
     data?.results.map((item, i) => <Card item={item} key={i} />);
 
-  return (
+  const content = () => (
     <section>
       {data ? (
         <p className="results-count">
@@ -35,6 +50,8 @@ const CardList = () => {
       )}
     </section>
   );
+
+  return isLoading ? <Preloader /> : content();
 };
 
 export default CardList;

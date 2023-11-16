@@ -1,4 +1,4 @@
-import { useEffect, createContext } from 'react';
+import { createContext } from 'react';
 import Search from '../components/Search';
 import CardList from '../components/CardList';
 import ErrorComponent from '../components/ErrorComponent';
@@ -7,17 +7,14 @@ import Preloader from '../components/common/Preloader';
 import { useSearchParams } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import CloseBtn from '../components/common/CloseBtn/CloseBtn';
-import { useDispatch, useSelector } from 'react-redux';
-import { setSearch } from '../store/searchSlice';
-import { setCurrentPage, setItemsPerPage } from '../store/paginationSlice';
 import { setDetailsId } from '../store/detailsSlice';
 import { useGetAllPeopleQuery } from '../api/getData';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const DataContext = createContext<Data | undefined>(undefined);
-export const SearchContext = createContext<string>('');
 
 const MainPage = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
   const search = useSelector((state: RootState) => state.search.query);
   const itemsPerPage = useSelector(
     (state: RootState) => state.pagination.itemsPerPage
@@ -43,24 +40,9 @@ const MainPage = () => {
     itemsPerPage,
   });
 
-  useEffect(() => {
-    const handleQueryParamsChange = () => {
-      const newSearch = searchParams.get('search');
-      dispatch(setSearch(newSearch ?? ''));
-      const newPage = searchParams.get('page');
-      if (newPage) dispatch(setCurrentPage(+newPage));
-      const itemsPerPage = searchParams.get('itemsPerPage');
-      if (itemsPerPage) dispatch(setItemsPerPage(+itemsPerPage));
-      const detailsId = searchParams.get('details');
-      dispatch(setDetailsId(detailsId));
-    };
-
-    handleQueryParamsChange();
-  }, [searchParams, dispatch]);
-
   const closeDetails = () => {
     if (showDetails) {
-      setDetailsId(null);
+      dispatch(setDetailsId(null));
       setSearchParams((params) => {
         params.delete('details');
         return params;

@@ -4,6 +4,7 @@ import './style.css';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearch } from '../../store/searchSlice';
+import { setCurrentPage } from '../../store/paginationSlice';
 
 const Search = () => {
   const [query, setQuery] = useState(
@@ -37,6 +38,7 @@ const Search = () => {
       });
     }
 
+    dispatch(setCurrentPage(1));
     setSearchParams((params) => {
       params.set('page', '1');
       return params;

@@ -2,8 +2,9 @@ import { useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { DataContext } from '../../pages/main';
 import './style.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../config/types';
+import { setCurrentPage, setItemsPerPage } from '../../store/paginationSlice';
 
 const Pagination = () => {
   const [, setSearchParams] = useSearchParams();
@@ -17,6 +18,7 @@ const Pagination = () => {
     (state: RootState) => state.pagination.currentPage
   );
   const pageCount = Math.ceil(itemsCount / itemsPerPage);
+  const dispatch = useDispatch();
 
   const pageNumbers = () =>
     Array(pageCount)
@@ -24,6 +26,7 @@ const Pagination = () => {
       .map((_, i) => i + 1);
 
   const handlePageChange = (newPage: number) => {
+    dispatch(setCurrentPage(newPage));
     setSearchParams((params) => {
       params.set('page', String(newPage));
       params.delete('details');
@@ -32,6 +35,7 @@ const Pagination = () => {
   };
 
   const handleItemsPerPageChange = (value: number) => {
+    dispatch(setItemsPerPage(itemsPerPage));
     setSearchParams((params) => {
       params.set('page', '1');
       params.set('itemsPerPage', String(value));

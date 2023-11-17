@@ -1,7 +1,6 @@
-import { UrlParams } from '../config/types';
+import { SearchUrlParams } from '../config/types';
 
-export const buildPath = (params: UrlParams) => {
-  if ('id' in params) return `${params.id}`;
+export const buildPath = (params: SearchUrlParams) => {
   const { query, page } = params;
   return query.length ? `?search=${query}&page=${page}` : `?page=${page}`;
 };

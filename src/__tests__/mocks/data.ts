@@ -1,7 +1,7 @@
 import { Data } from '../../config/types';
 
 export const data: Data = {
-  count: 2,
+  count: 20,
   next: null,
   previous: null,
   results: [

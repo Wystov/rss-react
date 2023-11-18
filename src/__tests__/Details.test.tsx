@@ -17,6 +17,7 @@ describe('Details component tests', () => {
     },
   };
   const store = setupStore(initialState);
+  window.scrollTo = () => {};
   server.listen();
 
   it('Loading indicator is displayed while fetching data', () => {

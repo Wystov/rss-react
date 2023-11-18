@@ -16,7 +16,7 @@ describe('Pagination component test', () => {
     render(
       <BrowserRouter>
         <Provider store={store}>
-          <Pagination />
+          <Pagination itemsCount={20} />
         </Provider>
       </BrowserRouter>
     );

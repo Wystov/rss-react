@@ -1,0 +1,23 @@
+.card {
+  position: relative;
+  cursor: pointer;
+  z-index: 2;
+  width: 280px;
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 10px;
+  transition: 0.3s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 7px 15px -5px rgba(227, 224, 224, 0.368);
+  }
+}
+
+.card__name {
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 2px;
+}

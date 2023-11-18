@@ -1,0 +1,35 @@
+.close-btn {
+  cursor: pointer;
+  position: absolute;
+  display: block;
+  width: 30px;
+  height: 30px;
+  top: 25px;
+  right: 25px;
+  opacity: 0.7;
+  transition: 0.3s;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:active {
+    transform: translateY(3px);
+  }
+}
+
+.close-btn:before,
+.close-btn:after {
+  position: absolute;
+  left: 15px;
+  content: '';
+  height: 30px;
+  width: 2px;
+  background-color: white;
+}
+.close-btn:before {
+  transform: rotate(45deg);
+}
+.close-btn:after {
+  transform: rotate(-45deg);
+}

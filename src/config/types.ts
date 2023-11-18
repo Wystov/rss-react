@@ -48,3 +48,7 @@ export interface CloseBtnProps {
 }
 
 export type RootState = ReturnType<typeof store.getState>;
+
+export interface PaginationProps {
+  itemsCount: number;
+}

@@ -42,7 +42,7 @@ const CardList = () => {
       )}
       {data?.results.length ? (
         <>
-          <Pagination />
+          <Pagination itemsCount={data.count} />
           <div className="results">{searchResults()}</div>
         </>
       ) : (

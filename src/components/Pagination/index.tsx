@@ -48,7 +48,8 @@ const Pagination = () => {
   };
 
   const handleItemsPerPageChange = (value: number) => {
-    dispatch(setItemsPerPage(itemsPerPage));
+    dispatch(setItemsPerPage(value));
+    dispatch(setCurrentPage(1));
     setSearchParams((params) => {
       params.set('page', '1');
       params.set('itemsPerPage', String(value));

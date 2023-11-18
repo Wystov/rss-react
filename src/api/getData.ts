@@ -19,14 +19,18 @@ export const swapi = createApi({
         const { page, itemsPerPage } = params;
         dispatch(setMainIsLoading(true));
 
-        const response = await fetchWithBQ(buildPath(params));
+        const response = (await fetchWithBQ(buildPath(params))) as {
+          data: Data;
+        };
 
         if (itemsPerPage === 20 && response.data.next) {
           const nextParams = {
             ...params,
             page: page + 1,
           };
-          const nextResponse = await fetchWithBQ(buildPath(nextParams));
+          const nextResponse = (await fetchWithBQ(buildPath(nextParams))) as {
+            data: Data;
+          };
           response.data.results.push(...nextResponse.data.results);
         }
 

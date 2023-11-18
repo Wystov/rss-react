@@ -6,8 +6,9 @@ import { setupStore } from '../store';
 import { Provider } from 'react-redux';
 
 describe('Search component tests', () => {
+  const store = setupStore();
+
   it('clicking the Search button saves the entered value to the local storage', async () => {
-    const store = setupStore();
     render(
       <BrowserRouter>
         <Provider store={store}>
@@ -29,22 +30,19 @@ describe('Search component tests', () => {
     expect(localStorage.getItem('sw-search-query')).toBe(newValue);
   });
 
-  // it('Component retrieves the value from the local storage upon mounting', () => {
-  //   const valueFromLs = 'value from ls';
-  //   localStorage.setItem('sw-search-query', valueFromLs);
+  it('Component retrieves the value from the local storage upon mounting', () => {
+    const valueFromLs = localStorage.getItem('sw-search-query');
 
-  //   const store = setupStore();
+    render(
+      <BrowserRouter>
+        <Provider store={store}>
+          <Search />
+        </Provider>
+      </BrowserRouter>
+    );
 
-  //   render(
-  //     <BrowserRouter>
-  //       <Provider store={store}>
-  //         <Search />
-  //       </Provider>
-  //     </BrowserRouter>
-  //   );
+    const input = screen.getByRole('textbox');
 
-  //   const input = screen.getByRole('textbox');
-
-  //   expect((input as HTMLInputElement).value).toBe(valueFromLs);
-  // });
+    expect((input as HTMLInputElement).value).toBe(valueFromLs);
+  });
 });

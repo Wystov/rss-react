@@ -3,14 +3,16 @@ import { describe, it, expect } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { data } from './mocks/data';
 import '@testing-library/jest-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, RouterProvider } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { setupStore } from '../store';
 import { server } from './mocks/api';
 import { Provider } from 'react-redux';
 import MainPage from '../pages/main';
+import router from '../router';
 
 describe('Card component tests', () => {
+  window.scrollTo = () => {};
   server.listen();
 
   it('Card component renders the relevant card data', () => {
@@ -49,28 +51,19 @@ describe('Card component tests', () => {
     });
   });
 
-  // it('Clicking card triggers an additional API call to fetch detailed information', async () => {
-  //   const store = setupStore();
+  it('Clicking card triggers an additional API call to fetch detailed information', async () => {
+    render(<RouterProvider router={router} />);
+    const name = await screen.findByText('Luke Skywalker');
 
-  //   render(
-  //     <BrowserRouter>
-  //       <Provider store={store}>
-  //         <MainPage />
-  //       </Provider>
-  //     </BrowserRouter>
-  //   );
-  //   const name = await screen.findByText('Luke Skywalker');
+    let detailsWasFetched = false;
+    server.events.on('request:start', ({ request }) => {
+      if (request.url === 'https://swapi.dev/api/people/1') {
+        detailsWasFetched = true;
+      }
+    });
 
-  //   let detailsWasFetched = false;
-  //   server.events.on('request:start', ({ request }) => {
-  //     console.log(request.url);
-  //     if (request.url === 'https://swapi.dev/api/people/1') {
-  //       detailsWasFetched = true;
-  //     }
-  //   });
+    await userEvent.click(name);
 
-  //   await userEvent.click(name);
-
-  //   expect(detailsWasFetched).toBeTruthy();
-  // });
+    expect(detailsWasFetched).toBeTruthy();
+  });
 });

@@ -25,7 +25,7 @@ const CardList = ({ data }: CardListProps) => {
           Error occured on getting data, please try later
         </div>
       )}
-      {data?.results.length ? (
+      {data?.results && data?.results.length ? (
         <>
           <Pagination itemsCount={data.count} />
           <div className={styles.results}>{searchResults()}</div>

@@ -1,7 +1,9 @@
-import { updateSearchParams } from '@/utils/updateSearchParams';
-import type { CardProps } from '@/config/types';
-import styles from './style.module.css';
 import { useRouter } from 'next/router';
+
+import type { CardProps } from '@/config/types';
+import { updateSearchParams } from '@/utils/updateSearchParams';
+
+import styles from './style.module.css';
 
 const Card = ({ item }: CardProps) => {
   const id = item.url.split('/').at(-2) ?? null;

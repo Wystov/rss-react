@@ -1,8 +1,10 @@
-import Card from '@/components/Card';
-import styles from './style.module.css';
-import Pagination from '@/components/Pagination';
 import { useRouter } from 'next/router';
+
+import Card from '@/components/Card';
+import Pagination from '@/components/Pagination';
 import { CardListProps } from '@/config/types';
+
+import styles from './style.module.css';
 
 const CardList = ({ data }: CardListProps) => {
   const searchResults = () =>

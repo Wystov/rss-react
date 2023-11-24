@@ -1,7 +1,9 @@
 import { useRef } from 'react';
-import styles from './style.module.css';
-import { updateSearchParams } from '@/utils/updateSearchParams';
 import { useRouter } from 'next/router';
+
+import { updateSearchParams } from '@/utils/updateSearchParams';
+
+import styles from './style.module.css';
 
 const Search = () => {
   const inputRef = useRef<HTMLInputElement>(null);

@@ -1,8 +1,10 @@
 import { useRouter } from 'next/router';
+
 import CloseBtn from '@/components/common/CloseBtn/CloseBtn';
-import styles from './style.module.css';
-import { updateSearchParams } from '@/utils/updateSearchParams';
 import { DetailsProps } from '@/config/types';
+import { updateSearchParams } from '@/utils/updateSearchParams';
+
+import styles from './style.module.css';
 
 const Details = ({ details }: DetailsProps) => {
   const router = useRouter();

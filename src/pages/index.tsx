@@ -1,9 +1,10 @@
 import type { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import Search from '@/components/Search';
+
 import CardList from '@/components/CardList';
-import ErrorComponent from '@/components/ErrorComponent';
 import Details from '@/components/Details';
+import ErrorComponent from '@/components/ErrorComponent';
+import Search from '@/components/Search';
 import { buildPath } from '@/utils/buildPath';
 
 export const getServerSideProps = (async ({ query }) => {

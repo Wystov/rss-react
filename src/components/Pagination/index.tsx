@@ -1,7 +1,9 @@
-import styles from './style.module.css';
+import { useRouter } from 'next/router';
+
 import { PaginationProps } from '@/config/types';
 import { updateSearchParams } from '@/utils/updateSearchParams';
-import { useRouter } from 'next/router';
+
+import styles from './style.module.css';
 
 const Pagination = ({ itemsCount }: PaginationProps) => {
   const router = useRouter();

@@ -7,8 +7,7 @@ import Details from '@/components/Details';
 import ErrorComponent from '@/components/ErrorComponent';
 import Search from '@/components/Search';
 
-export const getServerSideProps = (async ({ query, res }) => {
-  res.setHeader('Cache-Control', 'public, max-age=9999999999, must-revalidate');
+export const getServerSideProps = (async ({ query }) => {
   const { search, page, itemsPerPage, details } = query;
   const pageNum = +(page ?? 1);
   const params = {

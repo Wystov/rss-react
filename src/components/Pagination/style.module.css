@@ -7,10 +7,10 @@
 
 .pagination__item {
   list-style: none;
+}
 
-  &:last-child {
-    margin-left: auto;
-  }
+.pagination__item:last-child {
+  margin-left: auto;
 }
 
 .pagination__number:disabled {

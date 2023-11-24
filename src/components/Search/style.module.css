@@ -13,10 +13,10 @@
   padding: 10px 15px;
   font-size: 20px;
   transition: 0.3s;
+}
 
-  &:focus {
-    outline: 3px solid #ffa600;
-  }
+.search__input:focus {
+  outline: 3px solid #ffa600;
 }
 
 .search__btn {

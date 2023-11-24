@@ -1,25 +1,20 @@
-import { useSearchParams } from 'react-router-dom';
+import { updateSearchParams } from '@/utils/updateSearchParams';
 import type { CardProps } from '../../config/types';
-import './style.css';
-import { setDetailsId } from '../../store/detailsSlice';
-import { useDispatch } from 'react-redux';
+import styles from './style.module.css';
 
 const Card = ({ item }: CardProps) => {
   const id = item.url.split('/').at(-2) ?? null;
-  const [, setSearchParams] = useSearchParams();
-  const dispatch = useDispatch();
 
   const handleShowDetails = () => {
     if (!id) return;
-    dispatch(setDetailsId(id));
-    setSearchParams((params) => {
+    updateSearchParams((params) => {
       params.set('details', id);
       return params;
     });
   };
 
   return (
-    <div className="card" onClick={handleShowDetails}>
+    <div className={styles.card} onClick={handleShowDetails}>
       <span className="card__name">{item.name}</span>
       <ul>
         <li>

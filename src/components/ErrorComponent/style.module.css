@@ -1,4 +1,4 @@
-.error-btn {
+.errorBtn {
   cursor: pointer;
   position: fixed;
   z-index: 5;
@@ -9,8 +9,8 @@
   background-color: red;
   border-radius: 50px;
   transition: 0.1s;
+}
 
-  &:active {
-    transform: scale(0.9);
-  }
+.errorBtn:active {
+  transform: scale(0.9);
 }

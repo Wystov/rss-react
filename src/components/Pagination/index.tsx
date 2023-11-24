@@ -1,21 +1,15 @@
-import { useSearchParams } from 'react-router-dom';
-import './style.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { PaginationProps, RootState } from '../../config/types';
-import { setCurrentPage, setItemsPerPage } from '../../store/paginationSlice';
+import styles from './style.module.css';
+import { PaginationProps } from '../../config/types';
+import { updateSearchParams } from '@/utils/updateSearchParams';
+import { useRouter } from 'next/router';
 
 const Pagination = ({ itemsCount }: PaginationProps) => {
-  const [, setSearchParams] = useSearchParams();
+  const router = useRouter();
+  const { page, itemsPerPage } = router.query;
+  const itemsPerPageValue = itemsPerPage ?? 10;
 
-  const itemsPerPage = useSelector(
-    (state: RootState) => state.pagination.itemsPerPage
-  );
-
-  const currentPage = useSelector(
-    (state: RootState) => state.pagination.currentPage
-  );
-  const pageCount = Math.ceil(itemsCount / itemsPerPage);
-  const dispatch = useDispatch();
+  const currentPage = page ?? 1;
+  const pageCount = Math.ceil(itemsCount / +itemsPerPageValue);
 
   const pageNumbers = () =>
     Array(pageCount)
@@ -23,8 +17,7 @@ const Pagination = ({ itemsCount }: PaginationProps) => {
       .map((_, i) => i + 1);
 
   const handlePageChange = (newPage: number) => {
-    dispatch(setCurrentPage(newPage));
-    setSearchParams((params) => {
+    updateSearchParams((params) => {
       params.set('page', String(newPage));
       params.delete('details');
       return params;
@@ -32,9 +25,7 @@ const Pagination = ({ itemsCount }: PaginationProps) => {
   };
 
   const handleItemsPerPageChange = (value: number) => {
-    dispatch(setItemsPerPage(value));
-    dispatch(setCurrentPage(1));
-    setSearchParams((params) => {
+    updateSearchParams((params) => {
       params.set('page', '1');
       params.set('itemsPerPage', String(value));
       return params;
@@ -42,8 +33,8 @@ const Pagination = ({ itemsCount }: PaginationProps) => {
   };
 
   return (
-    <ul className="pagination">
-      <li className="pagination__item">
+    <ul className={styles.pagination}>
+      <li className={styles.pagination__item}>
         <button
           className="pagination__btn"
           onClick={() => handlePageChange(1)}
@@ -52,17 +43,17 @@ const Pagination = ({ itemsCount }: PaginationProps) => {
           &lt;&lt;
         </button>
       </li>
-      <li className="pagination__item">
+      <li className={styles.pagination__item}>
         <button
           className="pagination__btn"
-          onClick={() => handlePageChange(currentPage - 1)}
+          onClick={() => handlePageChange(+currentPage - 1)}
           disabled={currentPage === 1}
         >
           &lt;
         </button>
       </li>
       {pageNumbers().map((pageNumber) => (
-        <li className="pagination__item" key={pageNumber}>
+        <li className={styles.pagination__item} key={pageNumber}>
           <button
             className="pagination__btn pagination__number"
             onClick={() => handlePageChange(pageNumber)}
@@ -72,16 +63,16 @@ const Pagination = ({ itemsCount }: PaginationProps) => {
           </button>
         </li>
       ))}
-      <li className="pagination__item">
+      <li className={styles.pagination__item}>
         <button
           className="pagination__btn"
-          onClick={() => handlePageChange(currentPage + 1)}
+          onClick={() => handlePageChange(+currentPage + 1)}
           disabled={currentPage === pageCount}
         >
           &gt;
         </button>
       </li>
-      <li className="pagination__item">
+      <li className={styles.pagination__item}>
         <button
           className="pagination__btn"
           onClick={() => handlePageChange(pageCount)}
@@ -90,7 +81,7 @@ const Pagination = ({ itemsCount }: PaginationProps) => {
           &gt;&gt;
         </button>
       </li>
-      <li className="pagination__item">
+      <li className={styles.pagination__item}>
         Results per page: &nbsp;
         <select
           className="pagination__select"

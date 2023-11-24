@@ -1,8 +1,9 @@
 import { SearchUrlParams } from '@/config/types';
 
-export const buildPath = (params: SearchUrlParams) => {
-  const { query, page } = params;
+export const buildPath = ({ search, page }: SearchUrlParams) => {
   const baseUrl = 'https://swapi.dev/api/people/';
-  const path = query.length ? `?search=${query}&page=${page}` : `?page=${page}`;
+  const path = search.length
+    ? `?search=${search}&page=${page}`
+    : `?page=${page}`;
   return baseUrl + path;
 };

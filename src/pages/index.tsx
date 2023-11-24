@@ -1,48 +1,31 @@
-import type { GetServerSideProps } from 'next';
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
 
+import { getData } from '@/api/getData';
 import CardList from '@/components/CardList';
 import Details from '@/components/Details';
 import ErrorComponent from '@/components/ErrorComponent';
 import Search from '@/components/Search';
-import { buildPath } from '@/utils/buildPath';
 
 export const getServerSideProps = (async ({ query }) => {
   const { search, page, itemsPerPage, details } = query;
-  const searchValue = search ?? '';
-  const pageValue = +(page ?? 1);
-  const apiPage =
-    itemsPerPage && +itemsPerPage === 20 ? pageValue * 2 - 1 : pageValue;
-
-  const props = {
-    data: null,
-    details: null,
+  const pageNum = +(page ?? 1);
+  const params = {
+    search: `${search ?? ''}`,
+    page: itemsPerPage && +itemsPerPage === 20 ? pageNum * 2 - 1 : pageNum,
+    itemsPerPage: +(itemsPerPage ?? 10),
+    details: details ? details.toString() : null,
   };
 
-  const response = await fetch(
-    buildPath({ query: searchValue, page: apiPage })
-  );
-  props.data = await response.json();
-
-  if (+itemsPerPage === 20 && props.data.next) {
-    const nextResponse = await fetch(
-      buildPath({ query: searchValue, page: apiPage + 1 })
-    );
-    const nextResData = await nextResponse.json();
-    props.data.results.push(...nextResData.results);
-  }
-
-  if (details) {
-    const detailsResponse = await fetch(
-      `https://swapi.dev/api/people/${details}`
-    );
-    props.details = await detailsResponse.json();
-  }
+  const props = await getData(params);
 
   return { props };
 }) satisfies GetServerSideProps;
 
-const MainPage = ({ data, details }) => {
+const MainPage = ({
+  data,
+  details,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <>
       <Head>

@@ -28,18 +28,17 @@ export interface ErrorBoundaryProps {
   fallback: JSX.Element;
 }
 
-export interface DetailsProps {
-  data: ResultItem | null;
-}
+export type DetailsProps = {
+  details: ResultItem | null;
+};
 
 export type DetailsUrlParams = {
   id: string;
 };
 
 export type SearchUrlParams = {
-  query: string;
+  search: string;
   page: number;
-  itemsPerPage: number;
 };
 
 export interface CloseBtnProps {
@@ -50,10 +49,15 @@ export interface PaginationProps {
   itemsCount: number;
 }
 
-export interface CardListProps {
+export type CardListProps = {
   data: Data | null;
+};
+
+export interface getDataParams {
+  search: string;
+  page: number;
+  itemsPerPage: number;
+  details: string | null;
 }
 
-export interface DetailsProps {
-  details: ResultItem | null;
-}
+export type complexData = CardListProps & DetailsProps;

@@ -13,6 +13,7 @@ export const getData = async ({
   };
 
   try {
+    console.log('start fetching');
     const response = await fetch(buildPath({ search, page }));
     props.data = await response.json();
 

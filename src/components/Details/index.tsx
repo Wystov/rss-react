@@ -1,20 +1,17 @@
-// import { useGetDetailsQuery } from '../../api/getData';
-import CloseBtn from '../common/CloseBtn/CloseBtn';
-// import './style.css';
+import { useRouter } from 'next/router';
+import CloseBtn from '@/components/common/CloseBtn/CloseBtn';
+import styles from './style.module.css';
 import { updateSearchParams } from '@/utils/updateSearchParams';
+import { DetailsProps } from '@/config/types';
 
-const Details = ({ details }) => {
-  // const searchParams = new URLSearchParams(window.location.search);
-
-  // const id = searchParams.get('details');
-
-  // const { data } = useGetDetailsQuery({ id: id!.toString() });
-
+const Details = ({ details }: DetailsProps) => {
+  const router = useRouter();
   const closeDetails = () => {
-    updateSearchParams((params) => {
+    const searchParams = updateSearchParams((params) => {
       params.delete('details');
       return params;
     });
+    router.push(searchParams);
   };
 
   const content = () =>
@@ -51,8 +48,8 @@ const Details = ({ details }) => {
 
   return (
     <>
-      <div className="overlay" onClick={closeDetails} />
-      <div className="details">
+      <div className={styles.overlay} onClick={closeDetails} />
+      <div className={styles.details}>
         <h3>Details</h3>
         {content()}
         <CloseBtn onClick={closeDetails} />

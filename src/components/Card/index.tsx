@@ -1,21 +1,24 @@
 import { updateSearchParams } from '@/utils/updateSearchParams';
-import type { CardProps } from '../../config/types';
+import type { CardProps } from '@/config/types';
 import styles from './style.module.css';
+import { useRouter } from 'next/router';
 
 const Card = ({ item }: CardProps) => {
   const id = item.url.split('/').at(-2) ?? null;
+  const router = useRouter();
 
   const handleShowDetails = () => {
     if (!id) return;
-    updateSearchParams((params) => {
+    const searchParams = updateSearchParams((params) => {
       params.set('details', id);
       return params;
     });
+    router.push(searchParams);
   };
 
   return (
     <div className={styles.card} onClick={handleShowDetails}>
-      <span className="card__name">{item.name}</span>
+      <span className={styles.card__name}>{item.name}</span>
       <ul>
         <li>
           <span>Birth year: </span>

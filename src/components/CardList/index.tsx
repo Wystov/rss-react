@@ -1,17 +1,22 @@
-import Card from '../Card';
+import Card from '@/components/Card';
 import styles from './style.module.css';
-import Pagination from '../Pagination';
+import Pagination from '@/components/Pagination';
+import { useRouter } from 'next/router';
+import { CardListProps } from '@/config/types';
 
-const CardList = ({ data }) => {
+const CardList = ({ data }: CardListProps) => {
   const searchResults = () =>
     data?.results.map((item, i) => <Card item={item} key={i} />);
+
+  const router = useRouter();
+  const search = router.query.search ?? '';
 
   const content = () => (
     <section>
       {data ? (
-        <p className="results-count">
+        <p className={styles.resultsCount}>
           We&apos;v got {data!.count} result{data!.count === 1 ? '' : 's'}
-          {/* {search.length ? ` for "${search}"` : ''} */}
+          {search.length ? ` for "${search}"` : ''}
         </p>
       ) : (
         <div className="error">

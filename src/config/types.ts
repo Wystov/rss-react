@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import store from '../store';
 
 export interface ResultItem {
   name: string;
@@ -47,8 +46,14 @@ export interface CloseBtnProps {
   onClick: () => void;
 }
 
-export type RootState = ReturnType<typeof store.getState>;
-
 export interface PaginationProps {
   itemsCount: number;
+}
+
+export interface CardListProps {
+  data: Data | null;
+}
+
+export interface DetailsProps {
+  details: ResultItem | null;
 }

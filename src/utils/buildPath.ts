@@ -1,4 +1,4 @@
-import { SearchUrlParams } from '../config/types';
+import { SearchUrlParams } from '@/config/types';
 
 export const buildPath = (params: SearchUrlParams) => {
   const { query, page } = params;

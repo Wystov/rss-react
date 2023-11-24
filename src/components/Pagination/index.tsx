@@ -1,5 +1,5 @@
 import styles from './style.module.css';
-import { PaginationProps } from '../../config/types';
+import { PaginationProps } from '@/config/types';
 import { updateSearchParams } from '@/utils/updateSearchParams';
 import { useRouter } from 'next/router';
 
@@ -8,7 +8,7 @@ const Pagination = ({ itemsCount }: PaginationProps) => {
   const { page, itemsPerPage } = router.query;
   const itemsPerPageValue = itemsPerPage ?? 10;
 
-  const currentPage = page ?? 1;
+  const currentPage = page ? +page : 1;
   const pageCount = Math.ceil(itemsCount / +itemsPerPageValue);
 
   const pageNumbers = () =>
@@ -17,19 +17,21 @@ const Pagination = ({ itemsCount }: PaginationProps) => {
       .map((_, i) => i + 1);
 
   const handlePageChange = (newPage: number) => {
-    updateSearchParams((params) => {
+    const searchParams = updateSearchParams((params) => {
       params.set('page', String(newPage));
       params.delete('details');
       return params;
     });
+    router.push(searchParams);
   };
 
   const handleItemsPerPageChange = (value: number) => {
-    updateSearchParams((params) => {
+    const searchParams = updateSearchParams((params) => {
       params.set('page', '1');
       params.set('itemsPerPage', String(value));
       return params;
     });
+    router.push(searchParams);
   };
 
   return (
@@ -55,7 +57,7 @@ const Pagination = ({ itemsCount }: PaginationProps) => {
       {pageNumbers().map((pageNumber) => (
         <li className={styles.pagination__item} key={pageNumber}>
           <button
-            className="pagination__btn pagination__number"
+            className={styles.pagination__number}
             onClick={() => handlePageChange(pageNumber)}
             disabled={currentPage === pageNumber}
           >

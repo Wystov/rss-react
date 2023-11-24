@@ -4,25 +4,31 @@ import Search from '@/components/Search';
 import CardList from '@/components/CardList';
 import ErrorComponent from '@/components/ErrorComponent';
 import Details from '@/components/Details';
-import { useRouter } from 'next/router';
 import { buildPath } from '@/utils/buildPath';
 
 export const getServerSideProps = (async ({ query }) => {
   const { search, page, itemsPerPage, details } = query;
+  const searchValue = search ?? '';
+  const pageValue = +(page ?? 1);
+  const apiPage =
+    itemsPerPage && +itemsPerPage === 20 ? pageValue * 2 - 1 : pageValue;
 
-  const props = {};
+  const props = {
+    data: null,
+    details: null,
+  };
 
   const response = await fetch(
-    buildPath({ query: search ?? '', page: page ?? 1 })
+    buildPath({ query: searchValue, page: apiPage })
   );
   props.data = await response.json();
 
-  if (itemsPerPage === 20 && props.data.next) {
+  if (+itemsPerPage === 20 && props.data.next) {
     const nextResponse = await fetch(
-      buildPath({ query: search, page: +page + 1 })
+      buildPath({ query: searchValue, page: apiPage + 1 })
     );
     const nextResData = await nextResponse.json();
-    props.data.results.push(...nextResData.data.results);
+    props.data.results.push(...nextResData.results);
   }
 
   if (details) {
@@ -36,10 +42,6 @@ export const getServerSideProps = (async ({ query }) => {
 }) satisfies GetServerSideProps;
 
 const MainPage = ({ data, details }) => {
-  const router = useRouter();
-
-  const showDetails = router.query.details !== undefined;
-
   return (
     <>
       <Head>
@@ -48,12 +50,12 @@ const MainPage = ({ data, details }) => {
         <title>Star Wars characters database</title>
       </Head>
       <div className="app">
-        <main className={`main ${showDetails ? 'main--small' : ''}`}>
+        <main className={`main ${details ? 'main--small' : ''}`}>
           <Search />
           <CardList data={data} />
           <ErrorComponent />
         </main>
-        {showDetails && (
+        {details && (
           <aside className="aside">
             <Details details={details} />
           </aside>

@@ -1,14 +1,20 @@
 import { useEffect } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { SelectAutocomplete } from '@/components/SelectAutocomplete';
-import type { Inputs } from '@/types';
-import countries from '@/utils/countries.json';
+import router from '@/router';
+import { setControlledFormData } from '@/store/formsSlice';
+import type { Inputs, RootState } from '@/types';
 import { formSchema } from '@/utils/formSchema';
 
 export const ReactHookForm = () => {
+  const dispatch = useDispatch();
+  const countries = useSelector(
+    (state: RootState) => state.countries.countries
+  );
   const {
     control,
     register,
@@ -26,7 +32,10 @@ export const ReactHookForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    dispatch(setControlledFormData(data));
+    router.navigate('/');
+  };
 
   useEffect(() => {}, [touchedFields.password, errors.password]);
 

@@ -1,5 +1,7 @@
 import { UseFormSetValue } from 'react-hook-form';
 
+import { store } from './store';
+
 export type Inputs = {
   email: string;
   password: string;
@@ -21,3 +23,5 @@ export type SelectCountriesProps = {
   setValue: UseFormSetValue<Inputs>;
   trigger: (field: keyof Inputs) => void;
 };
+
+export type RootState = ReturnType<typeof store.getState>;

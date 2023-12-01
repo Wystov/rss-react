@@ -8,6 +8,7 @@ import { SelectAutocomplete } from '@/components/SelectAutocomplete';
 import router from '@/router';
 import { setControlledFormData } from '@/store/formsSlice';
 import type { Inputs, RootState } from '@/types';
+import { convertToBase64 } from '@/utils/convertToBase64';
 import { formSchema } from '@/utils/formSchema';
 
 export const ReactHookForm = () => {
@@ -32,8 +33,11 @@ export const ReactHookForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    dispatch(setControlledFormData(data));
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const image = data.image[0];
+    const imageBase64 = (await convertToBase64(image)) as string;
+    const dataWithImage = { ...data, image: imageBase64 };
+    dispatch(setControlledFormData(dataWithImage));
     router.navigate('/');
   };
 

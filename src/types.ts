@@ -9,7 +9,7 @@ export type Inputs = {
   name: string;
   age: number;
   gender: string;
-  image?: FileList;
+  image: FileList;
   country: string;
   acceptTerms: NonNullable<boolean>;
 };

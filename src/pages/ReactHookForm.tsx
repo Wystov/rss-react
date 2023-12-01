@@ -20,7 +20,7 @@ export const ReactHookForm = () => {
     control,
     register,
     handleSubmit,
-    formState: { errors, touchedFields },
+    formState: { errors, touchedFields, isValid },
     setValue,
     trigger,
   } = useForm({
@@ -127,7 +127,9 @@ export const ReactHookForm = () => {
           <span className="error">{errors.acceptTerms.message}</span>
         )}
 
-        <button type="submit">submit</button>
+        <button type="submit" disabled={!isValid}>
+          submit
+        </button>
       </form>
     </div>
   );

@@ -1,5 +1,7 @@
 import * as yup from 'yup';
 
+import countries from '../utils/countries.json';
+
 const MAX_FILE_SIZE = 1000000;
 const validFileTypes = ['image/jpeg', 'image/png'];
 
@@ -55,7 +57,10 @@ export const formSchema = yup.object({
       return file && file.size <= MAX_FILE_SIZE;
     }),
 
-  country: yup.string(),
+  country: yup
+    .string()
+    .required()
+    .oneOf(countries, 'Please select country from the list'),
 
   acceptTerms: yup
     .boolean()

@@ -1,20 +1,34 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { Inputs } from '@/types';
+import { SelectAutocomplete } from '@/components/SelectAutocomplete';
+import type { Inputs } from '@/types';
+import countries from '@/utils/countries.json';
 import { formSchema } from '@/utils/formSchema';
 
 export const ReactHookForm = () => {
   const {
+    control,
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, touchedFields },
+    setValue,
+    trigger,
   } = useForm({
     resolver: yupResolver(formSchema),
+    mode: 'onChange',
+    criteriaMode: 'all',
+    delayError: 500,
+    defaultValues: {
+      country: '',
+    },
   });
 
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
+  useEffect(() => {}, [touchedFields.password, errors.password]);
 
   return (
     <div>
@@ -75,8 +89,21 @@ export const ReactHookForm = () => {
         <input id="image" type="file" {...register('image')} />
         {errors.image && <span className="error">{errors.image.message}</span>}
 
-        <label htmlFor="country">Country</label>
-        <input id="country" {...register('country')} />
+        <Controller
+          name="country"
+          control={control}
+          render={({ field }) => (
+            <SelectAutocomplete
+              id="country"
+              label="Country"
+              options={countries}
+              onChange={field.onChange}
+              value={field.value}
+              setValue={setValue}
+              trigger={trigger}
+            />
+          )}
+        />
         {errors.country && (
           <span className="error">{errors.country.message}</span>
         )}

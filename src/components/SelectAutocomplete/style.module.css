@@ -1,0 +1,13 @@
+.option-list {
+  width: 300px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid #ccc;
+}
+
+.option:not(:last-child) {
+  cursor: pointer;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+}

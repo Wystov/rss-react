@@ -2,12 +2,14 @@ import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ValidationError } from 'yup';
 
+import { PasswordStrength } from '@/components/PasswordStrength';
 import { SelectAutocomplete } from '@/components/SelectAutocomplete';
 import router from '@/router';
 import { setUncontrolledFormData } from '@/store/formsSlice';
 import type { RootState } from '@/types';
 import { convertToBase64 } from '@/utils/convertToBase64';
 import { formSchema } from '@/utils/formSchema';
+import { updatePasswordStrength } from '@/utils/updatePasswordStrength';
 
 export const UncontrolledForm = () => {
   const emailInput = useRef<HTMLInputElement>(null);
@@ -22,6 +24,7 @@ export const UncontrolledForm = () => {
   const acceptTermsInput = useRef<HTMLInputElement>(null);
 
   const [errors, setErrors] = useState<Record<string, string> | null>(null);
+  const [passwordStrength, setPasswordStrength] = useState(4);
 
   const dispatch = useDispatch();
   const countries = useSelector(
@@ -63,6 +66,7 @@ export const UncontrolledForm = () => {
           if (error.path) newErrors[error.path] = error.message;
         });
         setErrors(newErrors);
+        updatePasswordStrength(data.password ?? '', setPasswordStrength);
       }
     }
 
@@ -85,6 +89,7 @@ export const UncontrolledForm = () => {
 
         <label htmlFor="password">Password</label>
         <input id="password" type="password" ref={passwordInput} />
+        <PasswordStrength passwordStrength={passwordStrength} />
         {errors?.password && <span className="error">{errors.password}</span>}
 
         <label htmlFor="confirmPassword">Confirm password</label>

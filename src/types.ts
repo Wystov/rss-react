@@ -30,3 +30,13 @@ export type SelectCountriesProps = {
 };
 
 export type RootState = ReturnType<typeof store.getState>;
+
+export type PasswordStrengthOption = {
+  message: string;
+  color: string;
+  percent: number;
+};
+
+export type PasswordStrengthProps = {
+  passwordStrength: number;
+};

@@ -1,15 +1,17 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 
+import { PasswordStrength } from '@/components/PasswordStrength';
 import { SelectAutocomplete } from '@/components/SelectAutocomplete';
 import router from '@/router';
 import { setControlledFormData } from '@/store/formsSlice';
 import type { Inputs, RootState } from '@/types';
 import { convertToBase64 } from '@/utils/convertToBase64';
 import { formSchema } from '@/utils/formSchema';
+import { updatePasswordStrength } from '@/utils/updatePasswordStrength';
 
 export const ReactHookForm = () => {
   const dispatch = useDispatch();
@@ -20,7 +22,8 @@ export const ReactHookForm = () => {
     control,
     register,
     handleSubmit,
-    formState: { errors, touchedFields, isValid },
+    watch,
+    formState: { errors, isValid },
     setValue,
     trigger,
   } = useForm({
@@ -33,6 +36,8 @@ export const ReactHookForm = () => {
     },
   });
 
+  const [passwordStrength, setPasswordStrength] = useState(4);
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const image = data.image[0];
     const imageBase64 = (await convertToBase64(image)) as string;
@@ -41,7 +46,11 @@ export const ReactHookForm = () => {
     router.navigate('/');
   };
 
-  useEffect(() => {}, [touchedFields.password, errors.password]);
+  const passwordValue = watch('password', '');
+
+  useEffect(() => {
+    updatePasswordStrength(passwordValue, setPasswordStrength);
+  }, [passwordValue]);
 
   return (
     <div>
@@ -53,6 +62,8 @@ export const ReactHookForm = () => {
 
         <label htmlFor="password">Password</label>
         <input id="password" type="password" {...register('password')} />
+        <PasswordStrength passwordStrength={passwordStrength} />
+
         {errors.password && (
           <span className="error">{errors.password.message}</span>
         )}

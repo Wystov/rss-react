@@ -10,7 +10,7 @@ export const MainPage = () => {
   const uncontrolledFormData = useSelector(
     (state: RootState) => state.forms.uncontrolledForm
   );
-  console.log(controlledFormData);
+
   return (
     <>
       <h1>Main page</h1>

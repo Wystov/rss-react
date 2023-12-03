@@ -12,6 +12,8 @@ export const SelectAutocomplete = ({
   value,
   setValue,
   trigger,
+  onValueSelected,
+  mode,
 }: SelectCountriesProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -27,8 +29,12 @@ export const SelectAutocomplete = ({
           className={style.option}
           key={option}
           onClick={() => {
-            setValue(id, option);
-            trigger(id);
+            if (mode === 'rhf') {
+              setValue(id, option);
+              trigger && trigger(id);
+            } else {
+              onValueSelected && onValueSelected(option);
+            }
           }}
         >
           {option}

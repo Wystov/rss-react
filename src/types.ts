@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react';
 import { UseFormSetValue } from 'react-hook-form';
 
 import { store } from './store';
@@ -18,10 +19,14 @@ export type SelectCountriesProps = {
   id: keyof Inputs;
   label: string;
   options: string[];
-  onChange: (...event: unknown[]) => void;
+  onChange:
+    | ((...event: unknown[]) => void)
+    | ((event: ChangeEvent<HTMLInputElement>) => void);
   value: string;
   setValue: UseFormSetValue<Inputs>;
-  trigger: (field: keyof Inputs) => void;
+  trigger?: (field: keyof Inputs) => void;
+  onValueSelected?: (value: string) => void;
+  mode: 'rhf' | 'uncontrolled';
 };
 
 export type RootState = ReturnType<typeof store.getState>;

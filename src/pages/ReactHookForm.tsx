@@ -48,7 +48,7 @@ export const ReactHookForm = () => {
       <h1>React hook form</h1>
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="email">e-mail</label>
-        <input id="email" type="email" {...register('email')} />
+        <input id="email" type="text" {...register('email')} />
         {errors.email && <span className="error">{errors.email.message}</span>}
 
         <label htmlFor="password">Password</label>
@@ -114,6 +114,7 @@ export const ReactHookForm = () => {
               value={field.value}
               setValue={setValue}
               trigger={trigger}
+              mode="rhf"
             />
           )}
         />

@@ -1,0 +1,95 @@
+.form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  text-align: center;
+  font-size: 24px;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  position: relative;
+}
+
+label:not([for='gender-male']):not([for='gender-female']),
+.gender-label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+input[type='text'],
+input[type='password'],
+input[type='number'],
+input[type='file'] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+input[type='radio'],
+input[type='checkbox'] {
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+button[type='submit'] {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+}
+
+button[type='submit']:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+button[type='submit']:disabled {
+  opacity: 0.5;
+}
+
+.dbl-column {
+  display: flex;
+  gap: 20px;
+}
+
+.col {
+  position: relative;
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+}
+
+.error {
+  position: absolute;
+  z-index: 2;
+  font-size: 14px;
+  font-weight: 400;
+  right: 0;
+  bottom: -15px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background-color: white;
+  color: red;
+}

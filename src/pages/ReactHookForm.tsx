@@ -57,65 +57,37 @@ export const ReactHookForm = () => {
   }, [passwordValue]);
 
   return (
-    <div>
-      <h1>React hook form</h1>
+    <div className="form-container">
+      <h1 className="form-title">React hook form</h1>
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="email">e-mail</label>
-        <input id="email" type="text" {...register('email')} />
-        {errors.email && <span className="error">{errors.email.message}</span>}
+        <label htmlFor="email">
+          E-mail:
+          <input id="email" type="text" {...register('email')} />
+          {errors.email && (
+            <span className="error">{errors.email.message}</span>
+          )}
+        </label>
 
-        <label htmlFor="password">Password</label>
-        <input id="password" type="password" {...register('password')} />
+        <label htmlFor="password">
+          Password:
+          <input id="password" type="password" {...register('password')} />
+          {errors.password && (
+            <span className="error">{errors.password.message}</span>
+          )}
+        </label>
         <PasswordStrength passwordStrength={passwordStrength} />
 
-        {errors.password && (
-          <span className="error">{errors.password.message}</span>
-        )}
-
-        <label htmlFor="confirmPassword">Confirm password</label>
-        <input
-          id="confirmPassword"
-          type="password"
-          {...register('confirmPassword')}
-        />
-        {errors.confirmPassword && (
-          <span className="error">{errors.confirmPassword.message}</span>
-        )}
-
-        <label htmlFor="name">Name</label>
-        <input id="name" {...register('name')} />
-        {errors.name && <span className="error">{errors.name.message}</span>}
-
-        <label htmlFor="age">Age</label>
-        <input id="age" type="number" {...register('age')} />
-        {errors.age && <span className="error">{errors.age.message}</span>}
-
-        <span>Gender</span>
-        <label htmlFor="gender-male">
+        <label htmlFor="confirmPassword">
+          Confirm password:
           <input
-            id="gender-male"
-            type="radio"
-            value="male"
-            {...register('gender')}
+            id="confirmPassword"
+            type="password"
+            {...register('confirmPassword')}
           />
-          Male
+          {errors.confirmPassword && (
+            <span className="error">{errors.confirmPassword.message}</span>
+          )}
         </label>
-        <label htmlFor="gender-female">
-          <input
-            id="gender-female"
-            type="radio"
-            value="female"
-            {...register('gender')}
-          />
-          Female
-        </label>
-        {errors.gender && (
-          <span className="error">{errors.gender.message}</span>
-        )}
-
-        <label htmlFor="image">Image</label>
-        <input id="image" type="file" {...register('image')} />
-        {errors.image && <span className="error">{errors.image.message}</span>}
 
         <Controller
           name="country"
@@ -130,18 +102,68 @@ export const ReactHookForm = () => {
               setValue={setValue}
               trigger={trigger}
               mode="rhf"
+              error={errors.country}
             />
           )}
         />
-        {errors.country && (
-          <span className="error">{errors.country.message}</span>
-        )}
 
-        <label htmlFor="acceptTerms">Accept terms</label>
-        <input id="acceptTerms" type="checkbox" {...register('acceptTerms')} />
-        {errors.acceptTerms && (
-          <span className="error">{errors.acceptTerms.message}</span>
-        )}
+        <label htmlFor="name">
+          Name:
+          <input id="name" type="text" {...register('name')} />
+          {errors.name && <span className="error">{errors.name.message}</span>}
+        </label>
+
+        <div className="dbl-column">
+          <div className="col">
+            <label htmlFor="age">Age:</label>
+            <input id="age" type="number" {...register('age')} />
+            {errors.age && <span className="error">{errors.age.message}</span>}
+          </div>
+          <div className="col">
+            <span className="gender-label">Gender</span>
+            <label htmlFor="gender-male">
+              <input
+                id="gender-male"
+                type="radio"
+                value="male"
+                {...register('gender')}
+              />
+              Male
+            </label>
+            <label htmlFor="gender-female">
+              <input
+                id="gender-female"
+                type="radio"
+                value="female"
+                {...register('gender')}
+              />
+              Female
+            </label>
+            {errors.gender && (
+              <span className="error">{errors.gender.message}</span>
+            )}
+          </div>
+        </div>
+
+        <label htmlFor="image">
+          Image:
+          <input id="image" type="file" {...register('image')} />
+          {errors.image && (
+            <span className="error">{errors.image.message}</span>
+          )}
+        </label>
+
+        <label htmlFor="acceptTerms">
+          Accept terms:
+          <input
+            id="acceptTerms"
+            type="checkbox"
+            {...register('acceptTerms')}
+          />
+          {errors.acceptTerms && (
+            <span className="error">{errors.acceptTerms.message}</span>
+          )}
+        </label>
 
         <button type="submit" disabled={!isValid}>
           submit

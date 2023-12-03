@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import { UseFormSetValue } from 'react-hook-form';
+import { FieldError, UseFormSetValue } from 'react-hook-form';
 
 import { store } from './store';
 
@@ -27,6 +27,7 @@ export type SelectCountriesProps = {
   trigger?: (field: keyof Inputs) => void;
   onValueSelected?: (value: string) => void;
   mode: 'rhf' | 'uncontrolled';
+  error?: FieldError | string;
 };
 
 export type RootState = ReturnType<typeof store.getState>;

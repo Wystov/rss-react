@@ -7,7 +7,8 @@ import router from '@/router';
 
 import { store } from './store';
 
-import './index.css';
+import './styles/index.css';
+import './styles/form.css';
 
 ReactDOM.createRoot(document.querySelector('.app')!).render(
   <React.StrictMode>

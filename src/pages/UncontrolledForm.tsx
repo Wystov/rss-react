@@ -84,62 +84,33 @@ export const UncontrolledForm = () => {
   };
 
   return (
-    <div>
-      <h1>Uncontrolled form</h1>
+    <div className="form-container">
+      <h1 className="form-title">Uncontrolled form</h1>
       <form className="form" onSubmit={onSubmit}>
-        <label htmlFor="email">e-mail</label>
-        <input id="email" type="text" ref={emailInput} />
-        {errors?.email && <span className="error">{errors.email}</span>}
+        <label htmlFor="email">
+          E-mail:
+          <input id="email" type="text" ref={emailInput} />
+          {errors?.email && <span className="error">{errors.email}</span>}
+        </label>
 
-        <label htmlFor="password">Password</label>
-        <input id="password" type="password" ref={passwordInput} />
+        <label htmlFor="password">
+          Password:
+          <input id="password" type="password" ref={passwordInput} />
+          {errors?.password && <span className="error">{errors.password}</span>}
+        </label>
         <PasswordStrength passwordStrength={passwordStrength} />
-        {errors?.password && <span className="error">{errors.password}</span>}
 
-        <label htmlFor="confirmPassword">Confirm password</label>
-        <input
-          id="confirmPassword"
-          type="password"
-          ref={confirmPasswordInput}
-        />
-        {errors?.confirmPassword && (
-          <span className="error">{errors.confirmPassword}</span>
-        )}
-
-        <label htmlFor="name">Name</label>
-        <input id="name" ref={nameInput} />
-        {errors?.name && <span className="error">{errors.name}</span>}
-
-        <label htmlFor="age">Age</label>
-        <input id="age" type="number" ref={ageInput} />
-        {errors?.age && <span className="error">{errors.age}</span>}
-
-        <span>Gender</span>
-        <label htmlFor="gender-male">
+        <label htmlFor="confirmPassword">
+          Confirm password:
           <input
-            id="gender-male"
-            name="gender"
-            type="radio"
-            value="male"
-            ref={genderMaleRadio}
+            id="confirmPassword"
+            type="password"
+            ref={confirmPasswordInput}
           />
-          Male
+          {errors?.confirmPassword && (
+            <span className="error">{errors.confirmPassword}</span>
+          )}
         </label>
-        <label htmlFor="gender-female">
-          <input
-            id="gender-female"
-            name="gender"
-            type="radio"
-            value="female"
-            ref={genderFemaleRadio}
-          />
-          Female
-        </label>
-        {errors?.gender && <span className="error">{errors.gender}</span>}
-
-        <label htmlFor="image">Image</label>
-        <input id="image" type="file" ref={imageInput} />
-        {errors?.image && <span className="error">{errors.image}</span>}
 
         <SelectAutocomplete
           id="country"
@@ -152,14 +123,60 @@ export const UncontrolledForm = () => {
           setValue={setCountry}
           onValueSelected={(option) => setCountry(option)}
           mode="uncontrolled"
+          error={errors?.country}
         />
-        {errors?.country && <span className="error">{errors.country}</span>}
 
-        <label htmlFor="acceptTerms">Accept terms</label>
-        <input id="acceptTerms" type="checkbox" ref={acceptTermsInput} />
-        {errors?.acceptTerms && (
-          <span className="error">{errors.acceptTerms}</span>
-        )}
+        <label htmlFor="name">
+          Name:
+          <input id="name" type="text" ref={nameInput} />
+          {errors?.name && <span className="error">{errors.name}</span>}
+        </label>
+
+        <div className="dbl-column">
+          <div className="col">
+            <label htmlFor="age">Age:</label>
+            <input id="age" type="number" ref={ageInput} />
+            {errors?.age && <span className="error">{errors.age}</span>}
+          </div>
+          <div className="col">
+            <span className="gender-label">Gender</span>
+            <label htmlFor="gender-male">
+              <input
+                id="gender-male"
+                name="gender"
+                type="radio"
+                value="male"
+                ref={genderMaleRadio}
+              />
+              Male
+            </label>
+            <label htmlFor="gender-female">
+              <input
+                id="gender-female"
+                name="gender"
+                type="radio"
+                value="female"
+                ref={genderFemaleRadio}
+              />
+              Female
+            </label>
+            {errors?.gender && <span className="error">{errors.gender}</span>}
+          </div>
+        </div>
+
+        <label htmlFor="image">
+          Image:
+          <input id="image" type="file" ref={imageInput} />
+          {errors?.image && <span className="error">{errors.image}</span>}
+        </label>
+
+        <label htmlFor="acceptTerms">
+          Accept terms:
+          <input id="acceptTerms" type="checkbox" ref={acceptTermsInput} />
+          {errors?.acceptTerms && (
+            <span className="error">{errors.acceptTerms}</span>
+          )}
+        </label>
 
         <button type="submit">submit</button>
       </form>

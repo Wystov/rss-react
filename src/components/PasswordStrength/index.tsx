@@ -8,7 +8,7 @@ export const PasswordStrength = ({
 }: PasswordStrengthProps) => {
   return (
     <div className={style['password-strength']}>
-      <div>{PASSWORD_STRENGTH_OPTIONS[passwordStrength].message}</div>
+      <div>Strength: {PASSWORD_STRENGTH_OPTIONS[passwordStrength].message}</div>
       <div className={style['progress-bar-container']}>
         <div
           className={style['progress-bar']}

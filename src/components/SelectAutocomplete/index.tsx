@@ -14,6 +14,7 @@ export const SelectAutocomplete = ({
   trigger,
   onValueSelected,
   mode,
+  error,
 }: SelectCountriesProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -55,6 +56,11 @@ export const SelectAutocomplete = ({
         />
         {isOpen && (
           <ul className={style['option-list']}>{filteredOptions()}</ul>
+        )}
+        {error && (
+          <span className="error">
+            {typeof error === 'string' ? error : error.message}
+          </span>
         )}
       </div>
     </>

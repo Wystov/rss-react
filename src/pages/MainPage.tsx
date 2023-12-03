@@ -25,7 +25,7 @@ export const MainPage = () => {
           {uncontrolledFormData.length ? (
             <SubmittedFormInfo data={uncontrolledFormData} />
           ) : (
-            <p>No data submited</p>
+            <p style={{ textAlign: 'center' }}>No data submited</p>
           )}
         </div>
         <div className="controlled">
@@ -33,7 +33,7 @@ export const MainPage = () => {
           {controlledFormData.length ? (
             <SubmittedFormInfo data={controlledFormData} />
           ) : (
-            <p>No data submited</p>
+            <p style={{ textAlign: 'center' }}>No data submited</p>
           )}
         </div>
       </div>

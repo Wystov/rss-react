@@ -3,9 +3,8 @@ import { SubmittedFormProps } from '@/types';
 import style from './style.module.css';
 
 export const SubmittedFormInfo = ({ data }: SubmittedFormProps) => {
-  console.log(data);
   return (
-    <>
+    <div className={style['card-container']}>
       {data.map(
         (
           {
@@ -22,7 +21,16 @@ export const SubmittedFormInfo = ({ data }: SubmittedFormProps) => {
           },
           i
         ) => (
-          <div className={style.card} key={i}>
+          <div
+            className={style.card}
+            key={i}
+            style={i === 0 ? { border: '2px solid gold' } : {}}
+          >
+            {i === 0 && (
+              <p>
+                <b>Data from last submited form</b>
+              </p>
+            )}
             <p>
               <b>Time: </b>
               {new Date(timestamp).toString()}
@@ -61,11 +69,12 @@ export const SubmittedFormInfo = ({ data }: SubmittedFormProps) => {
             </p>
             <p>
               <b>Image preview: </b>
+              <br />
               <img src={image} className={style.image} alt="image preview" />
             </p>
           </div>
         )
       )}
-    </>
+    </div>
   );
 };

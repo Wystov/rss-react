@@ -13,26 +13,30 @@ export const MainPage = () => {
   );
 
   return (
-    <>
+    <div className="main-container">
       <h1>Main page</h1>
-      <Link to={'/uncontrolled-form'}>Uncontrolled form</Link>
-      <Link to={'/react-hook-form'}>React hook form</Link>
-      <div>
-        <h2>uncontrolled form {`(${uncontrolledFormData.length})`}</h2>
-        {uncontrolledFormData.length ? (
-          <SubmittedFormInfo data={uncontrolledFormData} />
-        ) : (
-          <p>no data submited</p>
-        )}
+      <nav className="links">
+        <Link to={'/uncontrolled-form'}>Uncontrolled form</Link>
+        <Link to={'/react-hook-form'}>React hook form</Link>
+      </nav>
+      <div className="results-container">
+        <div className="uncontrolled">
+          <h2>Uncontrolled form {`(${uncontrolledFormData.length})`}</h2>
+          {uncontrolledFormData.length ? (
+            <SubmittedFormInfo data={uncontrolledFormData} />
+          ) : (
+            <p>No data submited</p>
+          )}
+        </div>
+        <div className="controlled">
+          <h2>Controlled form {`(${controlledFormData.length})`}</h2>
+          {controlledFormData.length ? (
+            <SubmittedFormInfo data={controlledFormData} />
+          ) : (
+            <p>No data submited</p>
+          )}
+        </div>
       </div>
-      <div>
-        <h2>controlled form {`(${controlledFormData.length})`}</h2>
-        {controlledFormData.length ? (
-          <SubmittedFormInfo data={controlledFormData} />
-        ) : (
-          <p>no data submited</p>
-        )}
-      </div>
-    </>
+    </div>
   );
 };

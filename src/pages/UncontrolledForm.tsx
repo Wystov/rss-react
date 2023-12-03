@@ -28,6 +28,16 @@ export const UncontrolledForm = () => {
     (state: RootState) => state.countries.countries
   );
 
+  const genderCheckedValue = () => {
+    if (genderMaleRadio.current?.checked) {
+      return genderMaleRadio.current?.value;
+    }
+    if (genderFemaleRadio.current?.checked) {
+      return genderFemaleRadio.current?.value;
+    }
+    return '';
+  };
+
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = {
@@ -36,9 +46,7 @@ export const UncontrolledForm = () => {
       confirmPassword: confirmPasswordInput.current?.value,
       name: nameInput.current?.value,
       age: ageInput.current?.value,
-      gender: genderMaleRadio.current?.checked
-        ? genderMaleRadio.current?.value
-        : genderFemaleRadio.current?.value,
+      gender: genderCheckedValue(),
       image: imageInput.current?.files,
       country,
       acceptTerms: acceptTermsInput.current?.checked,
@@ -101,6 +109,7 @@ export const UncontrolledForm = () => {
         <label htmlFor="gender-male">
           <input
             id="gender-male"
+            name="gender"
             type="radio"
             value="male"
             ref={genderMaleRadio}
@@ -110,6 +119,7 @@ export const UncontrolledForm = () => {
         <label htmlFor="gender-female">
           <input
             id="gender-female"
+            name="gender"
             type="radio"
             value="female"
             ref={genderFemaleRadio}

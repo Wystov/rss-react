@@ -42,7 +42,10 @@ export const formSchema = yup.object({
     .integer()
     .positive('Age must be a positive number'),
 
-  gender: yup.string().required('Please select gender'),
+  gender: yup
+    .string()
+    .required('Please select gender')
+    .oneOf(['male', 'female'], 'Please select gender'),
 
   image: yup
     .mixed<FileList>()

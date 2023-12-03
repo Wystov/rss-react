@@ -40,3 +40,20 @@ export type PasswordStrengthOption = {
 export type PasswordStrengthProps = {
   passwordStrength: number;
 };
+
+export type SubmittedFormFields = {
+  timestamp: number;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  name: string;
+  age: number;
+  gender: string;
+  image: string;
+  country: string;
+  acceptTerms: boolean;
+};
+
+export type SubmittedFormProps = {
+  data: SubmittedFormFields[];
+};

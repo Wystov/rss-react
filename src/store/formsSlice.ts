@@ -1,17 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { SubmittedFormFields } from '@/types';
+
 const formsSlice = createSlice({
   name: 'forms',
   initialState: {
-    uncontrolledForm: null,
-    controlledForm: null,
+    uncontrolledForm: [] as SubmittedFormFields[],
+    controlledForm: [] as SubmittedFormFields[],
   },
   reducers: {
     setUncontrolledFormData: (state, action) => {
-      state.uncontrolledForm = action.payload;
+      state.uncontrolledForm = [...state.uncontrolledForm, action.payload].sort(
+        (a, b) => b.timestamp - a.timestamp
+      );
     },
     setControlledFormData: (state, action) => {
-      state.controlledForm = action.payload;
+      state.controlledForm = [...state.controlledForm, action.payload].sort(
+        (a, b) => b.timestamp - a.timestamp
+      );
     },
   },
 });

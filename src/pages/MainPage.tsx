@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { SubmittedFormInfo } from '@/components/SubmittedFormInfo';
 import { RootState } from '@/types';
 
 export const MainPage = () => {
@@ -17,21 +18,17 @@ export const MainPage = () => {
       <Link to={'/uncontrolled-form'}>Uncontrolled form</Link>
       <Link to={'/react-hook-form'}>React hook form</Link>
       <div>
-        <h2>uncontrolled form</h2>
-        {uncontrolledFormData ? (
-          Object.entries(uncontrolledFormData).map(([key, value]) => (
-            <p key={key}>{`${key}: ${value}`}</p>
-          ))
+        <h2>uncontrolled form {`(${uncontrolledFormData.length})`}</h2>
+        {uncontrolledFormData.length ? (
+          <SubmittedFormInfo data={uncontrolledFormData} />
         ) : (
           <p>no data submited</p>
         )}
       </div>
       <div>
-        <h2>controlled form</h2>
-        {controlledFormData ? (
-          Object.entries(controlledFormData).map(([key, value]) => (
-            <p key={key}>{`${key}: ${value}`}</p>
-          ))
+        <h2>controlled form {`(${controlledFormData.length})`}</h2>
+        {controlledFormData.length ? (
+          <SubmittedFormInfo data={controlledFormData} />
         ) : (
           <p>no data submited</p>
         )}

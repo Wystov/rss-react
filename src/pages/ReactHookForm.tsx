@@ -41,7 +41,11 @@ export const ReactHookForm = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const image = data.image[0];
     const imageBase64 = (await convertToBase64(image)) as string;
-    const dataWithImage = { ...data, image: imageBase64 };
+    const dataWithImage = {
+      ...data,
+      image: imageBase64,
+      timestamp: Date.now(),
+    };
     dispatch(setControlledFormData(dataWithImage));
     router.navigate('/');
   };

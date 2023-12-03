@@ -74,7 +74,11 @@ export const UncontrolledForm = () => {
 
     const image = data.image?.[0];
     const imageBase64 = image && ((await convertToBase64(image)) as string);
-    const dataWithImage = { ...data, image: imageBase64 };
+    const dataWithImage = {
+      ...data,
+      image: imageBase64,
+      timestamp: Date.now(),
+    };
     dispatch(setUncontrolledFormData(dataWithImage));
     router.navigate('/');
   };

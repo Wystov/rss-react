@@ -1,0 +1,14 @@
+.card {
+  background-color: aqua;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.image {
+  height: 100px;
+}
+
+.image:hover {
+  position: absolute;
+  height: 500px;
+}

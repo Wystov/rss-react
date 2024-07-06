@@ -16,5 +16,5 @@ The different branches of this repository show the path of learning new technolo
 [code](https://github.com/Wystov/rss-react/tree/react/redux-toolkit-w4) | [deploy](https://rss-react-w4.netlify.app/)
 5. Migrated to Next.js and SSR.  
 [code](https://github.com/Wystov/rss-react/tree/react/next-w5) | [deploy](https://rss-react-zeta.vercel.app/)
-6. Separate website containing forms with controlled and uncontrolled components and different validation strategies.
+6. Separate website containing forms with controlled and uncontrolled components and different validation strategies.  
 [code](https://github.com/Wystov/rss-react/tree/react/forms-w6) | [deploy](https://rss-react-forms-w6.netlify.app/)

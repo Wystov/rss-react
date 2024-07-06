@@ -1,0 +1,16 @@
+.error-btn {
+  cursor: pointer;
+  position: fixed;
+  z-index: 5;
+  width: 50px;
+  height: 50px;
+  right: 25px;
+  bottom: 25px;
+  background-color: red;
+  border-radius: 50px;
+  transition: 0.1s;
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
